@@ -7,6 +7,13 @@ export const users = sqliteTable('users', {
     name: text('name').notNull(),
     email: text('email').notNull(),
     role: text('role', { enum: ['user', 'admin'] }).default('user').notNull(),
+
+    // Dados Profissionais (Profile)
+    re: text('re').unique(), // Registro Estatístico
+    rank: text('rank'), // Posto/Graduação
+    warName: text('war_name'), // Nome de Guerra
+    unit: text('unit'), // Unidade
+
     createdAt: integer('created_at', { mode: 'timestamp' }).default(sql`CURRENT_TIMESTAMP`),
 });
 

@@ -14,11 +14,14 @@ import { Button } from "@/components/ui/button";
 import { EquipmentFilters } from "@/components/dashboard/equipment-filters";
 import { BulkImport } from "@/components/dashboard/bulk-import";
 
+import { checkAdmin } from "@/server/auth";
+
 export default async function EquipmentPage({
     searchParams,
 }: {
     searchParams?: Promise<{ [key: string]: string | undefined }>;
 }) {
+    await checkAdmin();
     const params = await searchParams;
     const filters = {
         serialNumber: params?.serialNumber,
