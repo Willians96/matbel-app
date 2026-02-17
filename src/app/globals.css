@@ -10,6 +10,8 @@
   --color-foreground: var(--foreground);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
+  --color-pm-blue: #002147;
+  --color-pm-yellow: #f1c40f;
 }
 
 @media (prefers-color-scheme: dark) {
