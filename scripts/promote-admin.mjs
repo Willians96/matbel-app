@@ -1,37 +1,42 @@
 
-import { createClient } from "@libsql/client";
-import dotenv from "dotenv";
+import { createClient } from '@libsql/client';
+import dotenv from 'dotenv';
 
-dotenv.config({ path: ".env.local" });
+dotenv.config({ path: '.env.local' });
 
-const client = createClient({
-    url: process.env.TURSO_CONNECTION_URL,
-    authToken: process.env.TURSO_AUTH_TOKEN,
-});
+const url = process.env.TURSO_CONNECTION_URL?.trim();
+const authToken = process.env.TURSO_AUTH_TOKEN?.trim();
 
-const email = process.argv[2];
-
-if (!email) {
-    console.log("Usage: node scripts/promote-admin.mjs <email>");
+if (!url || !authToken) {
+    console.error('Missing credentials');
     process.exit(1);
 }
 
-async function main() {
+const client = createClient({
+    url,
+    authToken,
+});
+
+async function promote() {
+    console.log('Promoting user to admin (Raw SQL)...');
     try {
-        console.log(`Promoting user with email '${email}' to admin...`);
-        const result = await client.execute({
+        await client.execute({
             sql: "UPDATE users SET role = 'admin' WHERE email = ?",
-            args: [email],
+            args: ['michel.wmoraes@gmail.com']
         });
 
-        if (result.rowsAffected > 0) {
-            console.log("Success! User is now an admin.");
-        } else {
-            console.log("User not found. Please ensure they have logged in at least once.");
-        }
-    } catch (e) {
-        console.error("Error promoting user:", e);
+        console.log('Update command sent.');
+
+        // Verify
+        const result = await client.execute({
+            sql: "SELECT * FROM users WHERE email = ?",
+            args: ['michel.wmoraes@gmail.com']
+        });
+
+        console.log('User status:', result.rows);
+    } catch (error) {
+        console.error('Error:', error);
     }
 }
 
-main();
+promote();
