@@ -77,19 +77,35 @@ export function EquipmentForm() {
                     )}
                 />
 
-                <FormField
-                    control={form.control}
-                    name="serialNumber"
-                    render={({ field }) => (
-                        <FormItem>
-                            <FormLabel>Número de Série</FormLabel>
-                            <FormControl>
-                                <Input placeholder="Ex: S123456" {...field} />
-                            </FormControl>
-                            <FormMessage />
-                        </FormItem>
-                    )}
-                />
+                <div className="grid grid-cols-2 gap-4">
+                    <FormField
+                        control={form.control}
+                        name="serialNumber"
+                        render={({ field }) => (
+                            <FormItem>
+                                <FormLabel>Número de Série</FormLabel>
+                                <FormControl>
+                                    <Input placeholder="Ex: S123456" {...field} />
+                                </FormControl>
+                                <FormMessage />
+                            </FormItem>
+                        )}
+                    />
+
+                    <FormField
+                        control={form.control}
+                        name="patrimony"
+                        render={({ field }) => (
+                            <FormItem>
+                                <FormLabel>Patrimônio (Opcional)</FormLabel>
+                                <FormControl>
+                                    <Input placeholder="Ex: P-98765" {...field} />
+                                </FormControl>
+                                <FormMessage />
+                            </FormItem>
+                        )}
+                    />
+                </div>
 
                 <div className="grid grid-cols-2 gap-4">
                     <FormField
@@ -108,7 +124,6 @@ export function EquipmentForm() {
 
                     <FormField
                         control={form.control}
-                        name="status"
                         render={({ field }) => (
                             <FormItem>
                                 <FormLabel>Status</FormLabel>

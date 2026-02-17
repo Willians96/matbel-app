@@ -21,13 +21,15 @@ export async function createEquipment(values: z.infer<typeof equipmentSchema>) {
         return { success: false, message: "Campos inválidos." };
     }
 
-    const { name, serialNumber, category, status, observations } = validatedFields.data;
+    const { name, serialNumber, patrimony, category, unit, status, observations } = validatedFields.data;
 
     try {
         await db.insert(equipamentos).values({
             name,
             serialNumber,
+            patrimony: patrimony || null,
             category,
+            unit,
             status: status as any, // Enum casing might need adjustment if schema is strict
             observations,
             userId: user.id,
