@@ -18,8 +18,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Matbel - Controle de Equipamentos",
-  description: "Sistema de gestão de materiais bélicos e equipamentos.",
+  title: "CPI-7 - Controle de Material Bélico",
+  description: "Sistema de gestão de materiais bélicos e equipamentos da Polícia Militar.",
 };
 
 export default function RootLayout({

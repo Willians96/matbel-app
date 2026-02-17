@@ -19,8 +19,8 @@ export default function Home() {
           />
         </div>
 
-        <h1 className="text-3xl font-bold text-gray-900 mb-2">PMESP</h1>
-        <h2 className="text-lg text-gray-600 mb-8">Sistema de Controle de Equipamentos</h2>
+        <h1 className="text-3xl font-bold text-gray-900 mb-2">CPI-7</h1>
+        <h2 className="text-lg text-gray-600 mb-8">Controle de Material Bélico</h2>
 
         <div className="space-y-4 w-full">
           <SignedOut>
