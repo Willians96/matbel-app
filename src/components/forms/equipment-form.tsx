@@ -124,6 +124,7 @@ export function EquipmentForm() {
 
                     <FormField
                         control={form.control}
+                        name="status"
                         render={({ field }) => (
                             <FormItem>
                                 <FormLabel>Status</FormLabel>
