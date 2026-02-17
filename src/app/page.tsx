@@ -2,6 +2,7 @@ import Image from "next/image";
 import { SignInButton, SignedIn, SignedOut } from "@clerk/nextjs";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
+import { DashboardLink } from "@/components/home/dashboard-link";
 
 export default function Home() {
   return (
@@ -32,12 +33,7 @@ export default function Home() {
           </SignedOut>
 
           <SignedIn>
-            <Link href="/dashboard" className="w-full block">
-              <button className="w-full bg-green-600 text-white font-semibold py-3 px-4 rounded-md hover:bg-green-700 transition-colors flex items-center justify-center gap-2">
-                Acessar Dashboard
-                <ArrowRight className="w-4 h-4" />
-              </button>
-            </Link>
+            <DashboardLink />
           </SignedIn>
         </div>
 
