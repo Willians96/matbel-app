@@ -7,8 +7,10 @@ import { eq } from 'drizzle-orm';
 
 export async function syncUser() {
     const user = await currentUser();
+    console.log('[DEBUG] syncUser called. User ID:', user?.id);
 
     if (!user) {
+        console.log('[DEBUG] syncUser: No user authenticated.');
         return { success: false, message: 'Not authenticated' };
     }
 
