@@ -12,6 +12,7 @@ import {
 } from "@/components/ui/table";
 import { Button } from "@/components/ui/button";
 import { EquipmentFilters } from "@/components/dashboard/equipment-filters";
+import { BulkImport } from "@/components/dashboard/bulk-import";
 
 export default async function EquipmentPage({
     searchParams,
@@ -46,6 +47,13 @@ export default async function EquipmentPage({
             </div>
 
             <EquipmentFilters />
+
+            <details className="p-4 border rounded bg-slate-50">
+                <summary className="cursor-pointer font-medium text-sm text-slate-700">Importação em Massa (Excel)</summary>
+                <div className="mt-4">
+                    <BulkImport />
+                </div>
+            </details>
 
             <div className="border rounded-md">
                 <Table>
