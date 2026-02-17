@@ -11,9 +11,7 @@ export const equipmentSchema = z.object({
     category: z.string().min(1, {
         message: "A categoria é obrigatória.",
     }),
-    status: z.enum(["disponivel", "em_uso", "manutencao", "baixado"], {
-        required_error: "Selecione um status.",
-    }),
+    status: z.enum(["disponivel", "em_uso", "manutencao", "baixado"] as const),
     observations: z.string().optional(),
 })
 
