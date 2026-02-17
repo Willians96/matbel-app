@@ -11,6 +11,7 @@ import {
     TableRow,
 } from "@/components/ui/table";
 import { Button } from "@/components/ui/button";
+import { EquipmentFilters } from "@/components/dashboard/equipment-filters";
 
 export default async function EquipmentPage({
     searchParams,
