@@ -12,9 +12,7 @@ export const equipmentSchema = z.object({
     category: z.string().min(1, {
         message: "A categoria é obrigatória.",
     }),
-    unit: z.enum(UNIDADES_PM as unknown as [string, ...string[]], {
-        required_error: "Selecione uma unidade.",
-    }),
+    unit: z.enum(UNIDADES_PM as unknown as [string, ...string[]]),
     status: z.enum(["disponivel", "em_uso", "manutencao", "baixado"] as const),
     observations: z.string().optional(),
 })
