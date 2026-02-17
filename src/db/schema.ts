@@ -24,3 +24,20 @@ export const equipamentos = sqliteTable('equipamentos', {
     createdAt: integer('created_at', { mode: 'timestamp' }).default(sql`CURRENT_TIMESTAMP`),
     updatedAt: integer('updated_at', { mode: 'timestamp' }).default(sql`CURRENT_TIMESTAMP`),
 });
+
+export const transactions = sqliteTable("transactions", {
+    id: text("id").primaryKey().$defaultFn(() => crypto.randomUUID()),
+    equipmentId: integer("equipment_id").references(() => equipamentos.id).notNull(),
+
+    // Dados do Policial (Snapshot no momento da retirada)
+    userRe: text("user_re").notNull(),
+    userName: text("user_name").notNull(), // Nome de Guerra
+    userRank: text("user_rank"), // Posto/Graduação (Sd, Cb, Sgt...)
+    userUnit: text("user_unit").notNull(),
+
+    checkoutDate: integer("checkout_date", { mode: "timestamp" }).notNull().default(sql`CURRENT_TIMESTAMP`),
+    returnDate: integer("return_date", { mode: "timestamp" }),
+
+    status: text("status", { enum: ["active", "completed"] }).notNull().default("active"),
+    notes: text("notes"),
+});
