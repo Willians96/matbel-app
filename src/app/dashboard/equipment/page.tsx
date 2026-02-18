@@ -43,7 +43,7 @@ export default async function EquipmentPage({
                     </p>
                 </div>
                 <Link href="/dashboard/equipment/new">
-                    <Button className="gap-2 bg-pm-blue hover:bg-pm-blue/90">
+                    <Button className="gap-2 bg-pm-blue text-white hover:bg-pm-blue/90">
                         <Plus className="h-4 w-4" /> Novo Equipamento
                     </Button>
                 </Link>
