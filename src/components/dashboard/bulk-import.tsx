@@ -1,82 +1,94 @@
+
 "use client";
 
-import { useState } from "react";
-import { Upload, FileSpreadsheet, AlertCircle, CheckCircle } from "lucide-react";
+import { useDropzone } from "react-dropzone";
+import { useCallback, useState } from "react";
+import { UploadCloud, FileSpreadsheet, Loader2, CheckCircle, AlertCircle } from "lucide-react";
+import { processBulkImport } from "@/server/actions/bulk-import";
 import { Button } from "@/components/ui/button";
-import { processBulkImport } from "@/server/actions/import";
 
 export function BulkImport() {
-    const [file, setFile] = useState<File | null>(null);
     const [isUploading, setIsUploading] = useState(false);
-    const [status, setStatus] = useState<{ type: 'success' | 'error', message: string } | null>(null);
+    const [message, setMessage] = useState<{ type: 'success' | 'error', text: string } | null>(null);
 
-    const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        if (e.target.files && e.target.files[0]) {
-            setFile(e.target.files[0]);
-            setStatus(null);
-        }
-    };
-
-    const handleUpload = async () => {
+    const onDrop = useCallback(async (acceptedFiles: File[]) => {
+        const file = acceptedFiles[0];
         if (!file) return;
 
         setIsUploading(true);
-        setStatus(null);
+        setMessage(null);
 
-        const formData = new FormData();
-        formData.append("file", file);
+        try {
+            const formData = new FormData();
+            formData.append("file", file);
 
-        const result = await processBulkImport(formData);
+            const result = await processBulkImport(formData);
 
-        if (result.success) {
-            setStatus({ type: 'success', message: `${result.count} equipamentos importados com sucesso!` });
-            setFile(null);
-        } else {
-            setStatus({ type: 'error', message: result.error || "Erro na importação." });
+            if (result.success) {
+                setMessage({ type: 'success', text: `${result.count} registros importados com sucesso!` });
+            } else {
+                // @ts-ignore - result.error exists on failure but TS union discrimination might be tricky here without explicit check
+                setMessage({ type: 'error', text: result.error || "Erro desconhecido." });
+            }
+        } catch (error) {
+            setMessage({ type: 'error', text: "Erro ao processar arquivo." });
+        } finally {
+            setIsUploading(false);
         }
+    }, []);
 
-        setIsUploading(false);
-    };
+    const { getRootProps, getInputProps, isDragActive } = useDropzone({
+        onDrop,
+        accept: {
+            'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet': ['.xlsx'],
+            'application/vnd.ms-excel': ['.xls']
+        },
+        maxFiles: 1,
+        disabled: isUploading
+    });
 
     return (
-        <div className="p-6 border-2 border-dashed rounded-lg bg-slate-50 flex flex-col items-center gap-4 text-center">
-            <div className="p-4 bg-white rounded-full shadow-sm">
-                <FileSpreadsheet className="w-8 h-8 text-pm-blue" />
+        <div className="w-full">
+            <div
+                {...getRootProps()}
+                className={`
+                    border-2 border-dashed rounded-lg p-8 
+                    flex flex-col items-center justify-center text-center 
+                    transition-all duration-200 cursor-pointer
+                    ${isDragActive ? "border-pm-blue bg-blue-50/50" : "border-slate-200 hover:border-pm-blue/50 hover:bg-slate-50"}
+                    ${isUploading ? "opacity-50 pointer-events-none" : ""}
+                `}
+            >
+                <input {...getInputProps()} />
+
+                <div className="p-4 bg-white rounded-full shadow-sm border border-slate-100 mb-4">
+                    {isUploading ? (
+                        <Loader2 className="w-8 h-8 text-pm-blue animate-spin" />
+                    ) : (
+                        <FileSpreadsheet className="w-8 h-8 text-pm-blue" />
+                    )}
+                </div>
+
+                <div className="space-y-1">
+                    <p className="font-medium text-slate-700">
+                        {isUploading ? "Processando..." : "Clique ou arraste sua planilha aqui"}
+                    </p>
+                    <p className="text-sm text-muted-foreground">
+                        Suporta arquivos .xlsx e .xls
+                    </p>
+                </div>
+
+                <div className="mt-4 text-xs text-muted-foreground bg-slate-50 px-3 py-2 rounded border border-slate-100">
+                    <span className="font-semibold">Colunas Obrigatórias:</span> serial, name, category, unit
+                </div>
             </div>
 
-            <div>
-                <h3 className="text-lg font-semibold text-gray-900">Importação em Massa</h3>
-                <p className="text-sm text-gray-500">
-                    Carregue uma planilha Excel (.xlsx) com os equipamentos.<br />
-                    Colunas necessárias: Serial, Nome, Categoria, Unidade.
-                </p>
-            </div>
-
-            <div className="w-full max-w-xs">
-                <input
-                    type="file"
-                    accept=".xlsx, .xls"
-                    onChange={handleFileChange}
-                    className="block w-full text-sm text-slate-500
-              file:mr-4 file:py-2 file:px-4
-              file:rounded-full file:border-0
-              file:text-sm file:font-semibold
-              file:bg-pm-blue file:text-white
-              hover:file:bg-pm-blue/90"
-                />
-            </div>
-
-            {file && (
-                <Button onClick={handleUpload} disabled={isUploading} className="w-full max-w-xs">
-                    {isUploading ? "Processando..." : `Importar ${file.name}`}
-                </Button>
-            )}
-
-            {status && (
-                <div className={`flex items-center gap-2 text-sm font-medium ${status.type === 'success' ? 'text-green-600' : 'text-red-600'
-                    }`}>
-                    {status.type === 'success' ? <CheckCircle className="w-4 h-4" /> : <AlertCircle className="w-4 h-4" />}
-                    {status.message}
+            {message && (
+                <div className={`mt-4 p-4 rounded-md flex items-center gap-3 text-sm font-medium animate-in fade-in slide-in-from-top-2
+                    ${message.type === 'success' ? 'bg-green-50 text-green-700 border border-green-200' : 'bg-red-50 text-red-700 border border-red-200'}
+                `}>
+                    {message.type === 'success' ? <CheckCircle className="w-5 h-5 flex-shrink-0" /> : <AlertCircle className="w-5 h-5 flex-shrink-0" />}
+                    {message.text}
                 </div>
             )}
         </div>

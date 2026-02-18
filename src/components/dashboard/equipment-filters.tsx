@@ -12,32 +12,26 @@ import {
 } from "@/components/ui/select";
 import { Button } from "@/components/ui/button";
 import { UNIDADES_PM } from "@/config/units";
-import { useCallback, useState } from "react";
-import { Search, X } from "lucide-react";
+import { useCallback, useState, useEffect } from "react";
+import { Search, X, Filter } from "lucide-react";
 
 export function EquipmentFilters() {
     const router = useRouter();
     const searchParams = useSearchParams();
 
-    // Local state for debouncing or controlled inputs
+    // Initialize state from URL params
     const [serialNumber, setSerialNumber] = useState(searchParams.get("serialNumber") || "");
     const [patrimony, setPatrimony] = useState(searchParams.get("patrimony") || "");
     const [unit, setUnit] = useState(searchParams.get("unit") || "");
     const [status, setStatus] = useState(searchParams.get("status") || "");
 
-    // Update URL helper
-    const createQueryString = useCallback(
-        (name: string, value: string) => {
-            const params = new URLSearchParams(searchParams.toString());
-            if (value) {
-                params.set(name, value);
-            } else {
-                params.delete(name);
-            }
-            return params.toString();
-        },
-        [searchParams]
-    );
+    // Update state when URL params change (e.g. clear filters)
+    useEffect(() => {
+        setSerialNumber(searchParams.get("serialNumber") || "");
+        setPatrimony(searchParams.get("patrimony") || "");
+        setUnit(searchParams.get("unit") || "");
+        setStatus(searchParams.get("status") || "");
+    }, [searchParams]);
 
     const applyFilters = () => {
         const params = new URLSearchParams();
@@ -58,64 +52,80 @@ export function EquipmentFilters() {
     };
 
     return (
-        <div className="bg-slate-50 p-4 rounded-lg border flex flex-wrap gap-4 items-end">
-            <div className="space-y-1 w-full sm:w-auto flex-1 min-w-[200px]">
-                <span className="text-xs font-medium text-muted-foreground">Serial</span>
-                <Input
-                    placeholder="Buscar por Serial..."
-                    value={serialNumber}
-                    onChange={(e) => setSerialNumber(e.target.value)}
-                />
+        <div className="bg-white p-6 rounded-xl border border-slate-200 shadow-sm space-y-4">
+            <div className="flex items-center gap-2 mb-2 text-slate-800 font-semibold border-b pb-2 border-slate-100">
+                <Filter className="w-4 h-4 text-pm-blue" />
+                <h3>Filtros de Pesquisa</h3>
             </div>
 
-            <div className="space-y-1 w-full sm:w-auto flex-1 min-w-[200px]">
-                <span className="text-xs font-medium text-muted-foreground">Patrimônio</span>
-                <Input
-                    placeholder="Buscar por Patrimônio..."
-                    value={patrimony}
-                    onChange={(e) => setSerialNumber(e.target.value)}
-                />
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+                <div className="space-y-1.5">
+                    <label className="text-sm font-medium text-slate-700">Serial</label>
+                    <Input
+                        placeholder="Digite o serial..."
+                        value={serialNumber}
+                        onChange={(e) => setSerialNumber(e.target.value)}
+                        className="bg-white border-slate-300 focus:border-pm-blue focus:ring-pm-blue/20"
+                    />
+                </div>
+
+                <div className="space-y-1.5">
+                    <label className="text-sm font-medium text-slate-700">Patrimônio</label>
+                    <Input
+                        placeholder="Digite o patrimônio..."
+                        value={patrimony}
+                        onChange={(e) => setPatrimony(e.target.value)}
+                        className="bg-white border-slate-300 focus:border-pm-blue focus:ring-pm-blue/20"
+                    />
+                </div>
+
+                <div className="space-y-1.5">
+                    <label className="text-sm font-medium text-slate-700">Unidade</label>
+                    <Select value={unit} onValueChange={setUnit}>
+                        <SelectTrigger className="bg-white border-slate-300 focus:ring-pm-blue/20">
+                            <SelectValue placeholder="Todas as Unidades" />
+                        </SelectTrigger>
+                        <SelectContent>
+                            <SelectItem value="all">Todas as Unidades</SelectItem>
+                            {UNIDADES_PM.map((u) => (
+                                <SelectItem key={u} value={u}>{u}</SelectItem>
+                            ))}
+                        </SelectContent>
+                    </Select>
+                </div>
+
+                <div className="space-y-1.5">
+                    <label className="text-sm font-medium text-slate-700">Status</label>
+                    <Select value={status} onValueChange={setStatus}>
+                        <SelectTrigger className="bg-white border-slate-300 focus:ring-pm-blue/20">
+                            <SelectValue placeholder="Todos os Status" />
+                        </SelectTrigger>
+                        <SelectContent>
+                            <SelectItem value="all">Todos os Status</SelectItem>
+                            <SelectItem value="disponivel">Disponível</SelectItem>
+                            <SelectItem value="em_uso">Em Uso</SelectItem>
+                            <SelectItem value="manutencao">Manutenção</SelectItem>
+                            <SelectItem value="baixado">Baixado</SelectItem>
+                        </SelectContent>
+                    </Select>
+                </div>
             </div>
 
-            <div className="space-y-1 w-full sm:w-auto w-[200px]">
-                <span className="text-xs font-medium text-muted-foreground">Unidade</span>
-                <Select value={unit} onValueChange={setUnit}>
-                    <SelectTrigger>
-                        <SelectValue placeholder="Todas" />
-                    </SelectTrigger>
-                    <SelectContent>
-                        <SelectItem value="all">Todas</SelectItem>
-                        {UNIDADES_PM.map((u) => (
-                            <SelectItem key={u} value={u}>{u}</SelectItem>
-                        ))}
-                    </SelectContent>
-                </Select>
-            </div>
-
-            <div className="space-y-1 w-full sm:w-auto w-[150px]">
-                <span className="text-xs font-medium text-muted-foreground">Status</span>
-                <Select value={status} onValueChange={setStatus}>
-                    <SelectTrigger>
-                        <SelectValue placeholder="Todos" />
-                    </SelectTrigger>
-                    <SelectContent>
-                        <SelectItem value="all">Todos</SelectItem>
-                        <SelectItem value="disponivel">Disponível</SelectItem>
-                        <SelectItem value="em_uso">Em Uso</SelectItem>
-                        <SelectItem value="manutencao">Manutenção</SelectItem>
-                        <SelectItem value="baixado">Baixado</SelectItem>
-                    </SelectContent>
-                </Select>
-            </div>
-
-            <div className="flex gap-2">
-                <Button onClick={applyFilters} className="bg-pm-blue hover:bg-pm-blue/90">
-                    <Search className="w-4 h-4 mr-2" />
-                    Filtrar
-                </Button>
-                <Button variant="outline" onClick={clearFilters}>
+            <div className="flex gap-3 justify-end pt-2">
+                <Button
+                    variant="outline"
+                    onClick={clearFilters}
+                    className="border-slate-300 text-slate-700 hover:bg-slate-50"
+                >
                     <X className="w-4 h-4 mr-2" />
                     Limpar
+                </Button>
+                <Button
+                    onClick={applyFilters}
+                    className="bg-pm-blue hover:bg-pm-blue/90 shadow-md shadow-blue-900/10"
+                >
+                    <Search className="w-4 h-4 mr-2" />
+                    Aplicar Filtros
                 </Button>
             </div>
         </div>
