@@ -28,7 +28,7 @@ export default async function DashboardLayout({
             <Sidebar userRole={role} pendingCount={pendingCount} />
             <div className="flex-1 md:ml-64 flex flex-col">
                 <DashboardHeader />
-                <main className="flex-1 p-8 overflow-y-auto">
+                <main id="main" className="flex-1 p-8 overflow-y-auto">
                     <PageTransition>{children}</PageTransition>
                 </main>
             </div>

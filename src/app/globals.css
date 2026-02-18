@@ -56,6 +56,8 @@
   --popover-foreground: 222.2 84% 4.9%;
   --primary: 222.2 47.4% 11.2%;
   --primary-foreground: 210 40% 98%;
+  /* make primary slightly darker for contrast */
+  --primary: 210 40% 8%;
   --secondary: 210 40% 96.1%;
   --secondary-foreground: 222.2 47.4% 11.2%;
   --muted: 210 40% 96.1%;
@@ -125,6 +127,27 @@
 
   body {
     @apply bg-background text-foreground;
+  }
+  /* Visible skip link for keyboard users */
+  .skip-link {
+    position: absolute;
+    left: -9999px;
+    top: auto;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+  }
+  .skip-link:focus,
+  .skip-link:active {
+    left: 1rem;
+    top: 1rem;
+    width: auto;
+    height: auto;
+    padding: 0.5rem 0.75rem;
+    background: hsl(var(--primary));
+    color: hsl(var(--primary-foreground));
+    border-radius: 0.25rem;
+    z-index: 9999;
   }
   /* improved keyboard focus for accessibility */
   :focus-visible {
