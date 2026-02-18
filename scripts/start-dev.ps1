@@ -78,7 +78,7 @@ if ($tries -ge 60) {
     npm run test:e2e
   } else {
     Write-Host "Dev server started. To run tests in another terminal:"
-    Write-Host "`$env:BASE_URL=http://localhost:$port` then `npm run test:e2e`"
+    Write-Host ('$env:BASE_URL=http://localhost:' + $port + ' then npm run test:e2e')
   }
 }
 
