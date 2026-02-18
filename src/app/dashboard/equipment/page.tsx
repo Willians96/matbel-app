@@ -83,7 +83,6 @@ export default async function EquipmentPage({
                                     <TableHead>Categoria</TableHead>
                                     <TableHead>Unidade</TableHead>
                                     <TableHead>Status</TableHead>
-                                    <TableHead className="w-[80px] text-right">Ações</TableHead>
                                 </TableRow>
                             </TableHeader>
                             <TableBody>
@@ -114,20 +113,18 @@ export default async function EquipmentPage({
                                                             item.status === 'manutencao' ? 'Manutenção' : 'Baixado'}
                                                 </span>
                                             </TableCell>
-                                            <TableCell className="text-right">
-                                                <ActionMenu
-                                                    onView={() => window.location.assign(`/dashboard/equipment/${item.id}`)}
-                                                    onEdit={() => window.location.assign(`/dashboard/equipment/${item.id}/edit`)}
-                                                    onDelete={async () => {
-                                                        try {
-                                                            const res = await fetch(`/api/equipment/${item.id}`, { method: "DELETE" });
-                                                            if (!res.ok) throw new Error("delete failed");
-                                                            window.location.reload();
-                                                        } catch (e) {
-                                                            alert("Falha ao excluir o equipamento.");
-                                                        }
-                                                    }}
-                                                />
+                                            <TableCell>
+                                                <span className={`px-2.5 py-0.5 rounded-full text-xs font-semibold border
+                                                    ${item.status === 'disponivel' ? 'bg-green-50 text-green-700 border-green-200' :
+                                                        item.status === 'em_uso' ? 'bg-yellow-50 text-yellow-700 border-yellow-200' :
+                                                            item.status === 'manutencao' ? 'bg-red-50 text-red-700 border-red-200' :
+                                                                'bg-gray-100 text-gray-700 border-gray-200'
+                                                    }
+                                                `}>
+                                                    {item.status === 'disponivel' ? 'Disponível' :
+                                                        item.status === 'em_uso' ? 'Em Uso' :
+                                                            item.status === 'manutencao' ? 'Manutenção' : 'Baixado'}
+                                                </span>
                                             </TableCell>
                                         </TableRow>
                                     ))
