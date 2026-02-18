@@ -27,7 +27,7 @@ export function BulkImport() {
             if (result.success) {
                 setMessage({ type: 'success', text: `${result.count} registros importados com sucesso!` });
             } else {
-                const err = (result as any).error;
+                const err = (result as unknown as { error?: string })?.error;
                 setMessage({ type: 'error', text: err || "Erro desconhecido." });
             }
         } catch (error) {
