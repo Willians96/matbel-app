@@ -52,13 +52,13 @@ export function Sidebar({ userRole, pendingCount = 0 }: { userRole: string | nul
     });
 
     return (
-        <div className="hidden md:flex bg-pm-blue text-white h-screen flex-col w-64 fixed left-0 top-0" role="navigation" aria-label="Sidebar">
+        <div className="hidden md:flex bg-pm-blue text-white h-screen flex-col w-64 fixed left-0 top-0">
             <div className="p-6 border-b border-white/10">
                 <h1 className="text-2xl font-bold tracking-tight">CPI-7</h1>
                 <p className="text-xs text-slate-300 mt-1">Controle de Material Bélico</p>
             </div>
 
-            <nav className="flex-1 p-4 space-y-2">
+            <nav className="flex-1 p-4 space-y-2" role="navigation" aria-label="Sidebar navigation">
                 {filteredItems.map((item) => {
                     const Icon = item.icon;
                     const isActive = pathname === item.href;
@@ -90,7 +90,7 @@ export function Sidebar({ userRole, pendingCount = 0 }: { userRole: string | nul
             </nav>
 
             <div className="p-4 border-t border-white/10">
-                <p className="text-xs text-center text-slate-500">© 2026 PMESP</p>
+                <p className="text-xs text-center text-white/70">© 2026 PMESP</p>
             </div>
         </div>
     );
