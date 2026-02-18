@@ -1,10 +1,11 @@
 import Image from "next/image";
 import React from "react";
+import { motion } from "framer-motion";
 
 export default function Logo({ className }: { className?: string }) {
   const src = "/images/logo_pm.png";
   return (
-    <div className={className}>
+    <motion.div className={className} whileHover={{ scale: 1.03 }} transition={{ duration: 0.18 }}>
       <Image
         src={src}
         alt="Brasão PMESP"
@@ -14,7 +15,7 @@ export default function Logo({ className }: { className?: string }) {
         priority
         className="mx-auto"
       />
-    </div>
+    </motion.div>
   );
 }
 
