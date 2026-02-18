@@ -54,10 +54,11 @@
   --card-foreground: 222.2 84% 4.9%;
   --popover: 0 0% 100%;
   --popover-foreground: 222.2 84% 4.9%;
-  --primary: 222.2 47.4% 11.2%;
-  --primary-foreground: 210 40% 98%;
-  /* make primary slightly darker for contrast */
+  /* primary color (HSL) used by Tailwind tokens */
   --primary: 210 40% 8%;
+  --primary-foreground: 210 40% 98%;
+  /* focus / ring color for accessible outlines */
+  --focus-ring: 210 40% 30%;
   --secondary: 210 40% 96.1%;
   --secondary-foreground: 222.2 47.4% 11.2%;
   --muted: 210 40% 96.1%;
