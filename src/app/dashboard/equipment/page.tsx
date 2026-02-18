@@ -10,6 +10,7 @@ import {
     TableHeader,
     TableRow,
 } from "@/components/ui/table";
+import ActionMenu from "@/components/ui/action-menu";
 import { Button } from "@/components/ui";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { EquipmentFilters } from "@/components/dashboard/equipment-filters";
@@ -75,13 +76,14 @@ export default async function EquipmentPage({
                     <div className="rounded-md border border-slate-100">
                         <Table>
                             <TableHeader className="bg-slate-50">
-                                <TableRow>
+                                    <TableRow>
                                     <TableHead>Serial</TableHead>
                                     <TableHead>Patrimônio</TableHead>
                                     <TableHead>Nome</TableHead>
                                     <TableHead>Categoria</TableHead>
                                     <TableHead>Unidade</TableHead>
                                     <TableHead>Status</TableHead>
+                                    <TableHead className="w-[80px] text-right">Ações</TableHead>
                                 </TableRow>
                             </TableHeader>
                             <TableBody>
@@ -111,6 +113,21 @@ export default async function EquipmentPage({
                                                         item.status === 'em_uso' ? 'Em Uso' :
                                                             item.status === 'manutencao' ? 'Manutenção' : 'Baixado'}
                                                 </span>
+                                            </TableCell>
+                                            <TableCell className="text-right">
+                                                <ActionMenu
+                                                    onView={() => window.location.assign(`/dashboard/equipment/${item.id}`)}
+                                                    onEdit={() => window.location.assign(`/dashboard/equipment/${item.id}/edit`)}
+                                                    onDelete={async () => {
+                                                        try {
+                                                            const res = await fetch(`/api/equipment/${item.id}`, { method: "DELETE" });
+                                                            if (!res.ok) throw new Error("delete failed");
+                                                            window.location.reload();
+                                                        } catch (e) {
+                                                            alert("Falha ao excluir o equipamento.");
+                                                        }
+                                                    }}
+                                                />
                                             </TableCell>
                                         </TableRow>
                                     ))
