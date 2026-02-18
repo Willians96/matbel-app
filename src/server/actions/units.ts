@@ -17,8 +17,9 @@ export async function createUnit(name: string) {
         });
         revalidatePath("/dashboard/units");
         return { success: true, message: "Unidade criada com sucesso." };
-    } catch (error: any) {
-        if (error.message?.includes("UNIQUE constraint failed")) {
+    } catch (error) {
+        const msg = (error as Error & { message?: string })?.message;
+        if (msg?.includes("UNIQUE constraint failed")) {
             return { success: false, message: "Esta unidade já existe." };
         }
         return { success: false, message: "Erro ao criar unidade." };

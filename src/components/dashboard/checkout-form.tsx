@@ -128,7 +128,7 @@ export function CheckoutForm() {
                             autoFocus
                             required
                         />
-                        <p className="text-xs text-muted-foreground">O equipamento deve estar com status "Disponível".</p>
+                        <p className="text-xs text-muted-foreground">O equipamento deve estar com status &quot;Disponível&quot;.</p>
                     </div>
 
                     <SubmitButton />

@@ -18,7 +18,7 @@ export function BulkImport() {
         setIsUploading(true);
         setMessage(null);
 
-        try {
+            try {
             const formData = new FormData();
             formData.append("file", file);
 
@@ -27,8 +27,8 @@ export function BulkImport() {
             if (result.success) {
                 setMessage({ type: 'success', text: `${result.count} registros importados com sucesso!` });
             } else {
-                // @ts-ignore - result.error exists on failure but TS union discrimination might be tricky here without explicit check
-                setMessage({ type: 'error', text: result.error || "Erro desconhecido." });
+                const err = (result as any).error;
+                setMessage({ type: 'error', text: err || "Erro desconhecido." });
             }
         } catch (error) {
             setMessage({ type: 'error', text: "Erro ao processar arquivo." });
