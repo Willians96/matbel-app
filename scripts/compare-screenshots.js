@@ -2,7 +2,8 @@
 const fs = require('fs');
 const path = require('path');
 const PNG = require('pngjs').PNG;
-const pixelmatch = require('pixelmatch');
+const _pixelmatch = require('pixelmatch');
+const pixelmatch = _pixelmatch.default ? _pixelmatch.default : _pixelmatch;
 
 function readImage(file) {
   return new Promise((resolve, reject) => {
