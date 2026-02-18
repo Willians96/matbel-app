@@ -43,7 +43,7 @@ const sidebarItems = [
     },
 ];
 
-export function Sidebar({ userRole }: { userRole: string | null }) {
+export function Sidebar({ userRole, pendingCount = 0 }: { userRole: string | null, pendingCount?: number }) {
     const pathname = usePathname();
 
     const filteredItems = sidebarItems.filter(item => {
@@ -62,20 +62,28 @@ export function Sidebar({ userRole }: { userRole: string | null }) {
                 {filteredItems.map((item) => {
                     const Icon = item.icon;
                     const isActive = pathname === item.href;
+                    const showBadge = item.href === "/dashboard/admin/declarations" && pendingCount > 0;
 
                     return (
                         <Link
                             key={item.href}
                             href={item.href}
                             className={cn(
-                                "flex items-center gap-3 px-4 py-3 text-sm font-medium rounded-md transition-colors",
+                                "flex items-center justify-between px-4 py-3 text-sm font-medium rounded-md transition-colors",
                                 isActive
                                     ? "bg-white/10 text-white"
                                     : "text-slate-300 hover:bg-white/5 hover:text-white"
                             )}
                         >
-                            <Icon className="h-5 w-5" />
-                            {item.title}
+                            <div className="flex items-center gap-3">
+                                <Icon className="h-5 w-5" />
+                                {item.title}
+                            </div>
+                            {showBadge && (
+                                <span className="bg-red-600 text-white text-[10px] font-bold px-2 py-0.5 rounded-full animate-pulse">
+                                    {pendingCount}
+                                </span>
+                            )}
                         </Link>
                     )
                 })}

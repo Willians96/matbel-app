@@ -30,6 +30,13 @@ export async function createDeclaration(data: z.infer<typeof declarationSchema>)
     }
 
     try {
+        // Auto-approve if it's the first declaration
+        const existingDeclarations = await db.query.declarations.findFirst({
+            where: eq(declarations.userId, userId),
+        });
+
+        const initialStatus = existingDeclarations ? "pending" : "approved";
+
         await db.insert(declarations).values({
             userId: userId,
             userRe: userProfile.re,
@@ -40,11 +47,15 @@ export async function createDeclaration(data: z.infer<typeof declarationSchema>)
             vestSerialNumber: data.vestSerialNumber || null,
             hasHandcuffs: data.hasHandcuffs,
             handcuffsSerialNumber: data.handcuffsSerialNumber || null,
-            status: "pending",
+            status: initialStatus,
         });
 
+        const successMessage = initialStatus === 'approved'
+            ? "Declaração registrada e aprovada automaticamente!"
+            : "Solicitação enviada para análise do admin.";
+
         revalidatePath("/dashboard");
-        return { success: true, message: "Declaração enviada com sucesso! Aguarde aprovação." };
+        return { success: true, message: successMessage };
     } catch (error) {
         console.error("Erro ao criar declaração:", error);
         return { success: false, message: "Erro ao salvar declaração. Tente novamente." };
