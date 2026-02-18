@@ -5,7 +5,7 @@ import { useDropzone } from "react-dropzone";
 import { useCallback, useState } from "react";
 import { UploadCloud, FileSpreadsheet, Loader2, CheckCircle, AlertCircle } from "lucide-react";
 import { processBulkImport } from "@/server/actions/bulk-import";
-import { Button } from "@/components/ui/button";
+import { Button } from "@/components/ui";
 
 export function BulkImport() {
     const [isUploading, setIsUploading] = useState(false);
