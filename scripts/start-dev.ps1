@@ -46,12 +46,16 @@ Write-Host "Starting dev server on port $port (new window)..."
 # Start a child PowerShell running the dev server (loads .env.local and sets PORT)
 # Use elevated privileges to avoid junction/symlink permission errors on Windows (Turbopack).
 $childPath = Join-Path $projectRoot "scripts\\dev-child.ps1"
-$arg = "-NoExit -File `"$childPath`" -Port $port"
+
+# Build a robust ArgumentList that sets the working directory in the child and invokes the child script.
+$projectRootPath = (Resolve-Path $projectRoot).Path
+$childPathEsc = $childPath -replace "'","''"
+$cmd = "Set-Location -LiteralPath '$projectRootPath'; & '$childPathEsc' -Port $port"
 try {
-  Start-Process -FilePath "powershell" -ArgumentList $arg -WorkingDirectory $projectRoot -Verb RunAs -ErrorAction Stop
+  Start-Process -FilePath "powershell" -ArgumentList "-NoExit", "-Command", $cmd -Verb RunAs -ErrorAction Stop
 } catch {
   Write-Warning "Falha ao iniciar processo elevado. Tentando iniciar sem ele..."
-  Start-Process -FilePath "powershell" -ArgumentList $arg -WorkingDirectory $projectRoot
+  Start-Process -FilePath "powershell" -ArgumentList "-NoExit", "-Command", $cmd -ErrorAction SilentlyContinue
 }
 
 Write-Host "Waiting for server to become available at http://localhost:$port ..."
