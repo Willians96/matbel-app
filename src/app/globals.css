@@ -155,4 +155,24 @@
     outline: 3px solid hsl(var(--ring));
     outline-offset: 2px;
   }
+  /* Typography scale and spacing refinements */
+  h1 {
+    font-size: 1.875rem; /* 30px */
+    line-height: 1.15;
+    margin-bottom: 0.5rem;
+    letter-spacing: -0.02em;
+  }
+  h2 {
+    font-size: 1.375rem; /* 22px */
+    line-height: 1.2;
+    margin-bottom: 0.5rem;
+  }
+  p {
+    line-height: 1.6;
+    margin-bottom: 0.75rem;
+  }
+  .lead {
+    font-size: 1.0625rem; /* 17px */
+    color: hsl(var(--muted-foreground));
+  }
 }
