@@ -15,6 +15,8 @@ import {
 } from "@/components/ui/select";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { UNIDADES_PM } from "@/config/units";
+import { toast } from "sonner";
+import { useEffect } from "react";
 
 const initialState: ProfileState = {
     success: false,
@@ -42,6 +44,17 @@ interface ProfileFormProps {
 
 export function ProfileForm({ initialData }: ProfileFormProps) {
     const [state, formAction] = useFormState(updateProfile, initialState);
+
+    // Toast notification effect
+    useEffect(() => {
+        if (state.message) {
+            if (state.success) {
+                toast.success("Perfil Atualizado!", { description: state.message });
+            } else {
+                toast.error("Erro ao Salvar", { description: state.message });
+            }
+        }
+    }, [state]);
 
     return (
         <Card>
@@ -114,13 +127,6 @@ export function ProfileForm({ initialData }: ProfileFormProps) {
                             </SelectContent>
                         </Select>
                     </div>
-
-                    {state.message && (
-                        <div className={`p-4 rounded-md text-sm font-medium ${state.success ? "bg-green-100 text-green-800" : "bg-red-100 text-red-800"
-                            }`}>
-                            {state.message}
-                        </div>
-                    )}
 
                     <SubmitButton />
                 </form>

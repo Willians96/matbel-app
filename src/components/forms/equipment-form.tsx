@@ -18,12 +18,12 @@ import {
 import { Input } from "@/components/ui/input"
 import { equipmentSchema } from "@/lib/validations/equipment"
 import { createEquipment } from "@/server/actions/equipment"
+import { toast } from "sonner"
 import { useState } from "react"
 import { useRouter } from "next/navigation"
 
 export function EquipmentForm() {
     const [isPending, setIsPending] = useState(false);
-    const [message, setMessage] = useState("");
     const router = useRouter();
 
     const form = useForm<z.infer<typeof equipmentSchema>>({
@@ -39,29 +39,27 @@ export function EquipmentForm() {
 
     async function onSubmit(values: z.infer<typeof equipmentSchema>) {
         setIsPending(true);
-        setMessage("");
 
-        const result = await createEquipment(values);
+        try {
+            const result = await createEquipment(values);
 
-        setIsPending(false);
-        if (result.success) {
-            setMessage("✅ " + result.message);
-            form.reset();
-            router.refresh();
-        } else {
-            setMessage("❌ " + result.message);
+            if (result.success) {
+                toast.success("Equipamento Cadastrado!", { description: result.message });
+                form.reset();
+                router.refresh();
+            } else {
+                toast.error("Erro ao Cadastrar", { description: result.message });
+            }
+        } catch (error) {
+            toast.error("Erro de Conexão", { description: "Tente novamente mais tarde." });
+        } finally {
+            setIsPending(false);
         }
     }
 
     return (
         <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8 max-w-md">
-
-                {message && (
-                    <div className={`p-4 rounded-md ${message.startsWith("✅") ? "bg-green-100 text-green-800" : "bg-red-100 text-red-800"}`}>
-                        {message}
-                    </div>
-                )}
 
                 <FormField
                     control={form.control}

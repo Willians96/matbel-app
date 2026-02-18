@@ -17,7 +17,8 @@ import {
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { UNIDADES_PM } from "@/config/units";
 import { AlertCircle, CheckCircle } from "lucide-react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { toast } from "sonner";
 
 const initialState: CheckoutState = {
     success: false,
@@ -56,6 +57,17 @@ export function CheckoutForm() {
             setLoadingUser(false);
         }
     }
+
+    // Toast notification effect
+    useEffect(() => {
+        if (state.message) {
+            if (state.success) {
+                toast.success("Sucesso!", { description: state.message });
+            } else {
+                toast.error("Erro!", { description: state.message });
+            }
+        }
+    }, [state]);
 
     return (
         <Card>
@@ -118,14 +130,6 @@ export function CheckoutForm() {
                         />
                         <p className="text-xs text-muted-foreground">O equipamento deve estar com status "Disponível".</p>
                     </div>
-
-                    {state.message && (
-                        <div className={`p-4 rounded-md flex items-center gap-2 ${state.success ? "bg-green-100 text-green-800" : "bg-red-100 text-red-800"
-                            }`}>
-                            {state.success ? <CheckCircle className="w-5 h-5" /> : <AlertCircle className="w-5 h-5" />}
-                            <span className="font-medium">{state.message}</span>
-                        </div>
-                    )}
 
                     <SubmitButton />
                 </form>
