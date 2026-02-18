@@ -44,7 +44,15 @@ if (-not $port) {
 Write-Host "Starting dev server on port $port (new window)..."
 
 # Start a child PowerShell running the dev server (loads .env.local and sets PORT)
-Start-Process -FilePath "powershell" -ArgumentList "-NoExit", "-File", ".\scripts\dev-child.ps1", "-Port", $port -WorkingDirectory $projectRoot
+# Use elevated privileges to avoid junction/symlink permission errors on Windows (Turbopack).
+$childPath = Join-Path $projectRoot "scripts\\dev-child.ps1"
+$arg = "-NoExit -File `"$childPath`" -Port $port"
+try {
+  Start-Process -FilePath "powershell" -ArgumentList $arg -WorkingDirectory $projectRoot -Verb RunAs -ErrorAction Stop
+} catch {
+  Write-Warning "Falha ao iniciar processo elevado. Tentando iniciar sem ele..."
+  Start-Process -FilePath "powershell" -ArgumentList $arg -WorkingDirectory $projectRoot
+}
 
 Write-Host "Waiting for server to become available at http://localhost:$port ..."
 
