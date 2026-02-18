@@ -122,7 +122,7 @@ export function EquipmentFilters() {
                 </Button>
                 <Button
                     onClick={applyFilters}
-                    className="bg-pm-blue hover:bg-pm-blue/90 shadow-md shadow-blue-900/10"
+                    className="bg-pm-blue text-white hover:bg-pm-blue/90 shadow-md shadow-blue-900/10"
                 >
                     <Search className="w-4 h-4 mr-2" />
                     Aplicar Filtros
