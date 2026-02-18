@@ -5,7 +5,7 @@ const nextConfig: NextConfig = {
   // Ensure Turbopack resolves from project root to avoid creating junctions outside workspace
   turbopack: {
     root: __dirname,
-  } as any,
+  } as unknown as NextConfig["turbopack"],
 };
 
 export default nextConfig;

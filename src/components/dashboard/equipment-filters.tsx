@@ -33,9 +33,13 @@ export function EquipmentFilters() {
         const st = searchParams.get("status") || "";
 
         // Use functional updates to avoid unnecessary re-renders
+        /* eslint-disable-next-line react-hooks/set-state-in-effect */
         setSerialNumber((prev) => (prev === sn ? prev : sn));
+        /* eslint-disable-next-line react-hooks/set-state-in-effect */
         setPatrimony((prev) => (prev === pt ? prev : pt));
+        /* eslint-disable-next-line react-hooks/set-state-in-effect */
         setUnit((prev) => (prev === u ? prev : u));
+        /* eslint-disable-next-line react-hooks/set-state-in-effect */
         setStatus((prev) => (prev === st ? prev : st));
     }, [searchParams]);
 
