@@ -3,7 +3,9 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
+    "preflight": "node scripts/preflight.js",
+    "dev": "npm run preflight && next dev",
+    "dev:clean": "node scripts/clean-dev-lock.js && npm run dev",
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
