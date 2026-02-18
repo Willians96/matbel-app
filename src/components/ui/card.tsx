@@ -9,14 +9,14 @@ const Card = React.forwardRef<
     React.HTMLAttributes<HTMLDivElement>
 >(({ className, ...props }, ref) => (
     <motion.div
-        ref={ref}
+        ref={ref as any}
         whileHover={{ translateY: -4 }}
         transition={{ type: "spring", stiffness: 220, damping: 20 }}
         className={cn(
             "rounded-xl border bg-card text-card-foreground shadow-sm hover:shadow-md transition-shadow p-4 sm:p-6 transform-gpu",
             className
         )}
-        {...props}
+        {...(props as any)}
     />
 ))
 Card.displayName = "Card"
