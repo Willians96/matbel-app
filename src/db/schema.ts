@@ -79,3 +79,23 @@ export const units = sqliteTable("units", {
     active: integer("active", { mode: "boolean" }).default(true),
     createdAt: integer("created_at", { mode: "timestamp" }).default(sql`CURRENT_TIMESTAMP`),
 });
+
+export const transfers = sqliteTable("transfers", {
+    id: text("id").primaryKey().$defaultFn(() => crypto.randomUUID()),
+    equipmentId: integer("equipment_id").references(() => equipamentos.id).notNull(),
+
+    // Admin (From/To)
+    adminId: text("admin_id").references(() => users.id),
+
+    // User (From/To)
+    userId: text("user_id").references(() => users.id).notNull(),
+
+    type: text("type", { enum: ["allocation", "return"] }).notNull(), // allocation: Admin->User, return: User->Admin
+    status: text("status", { enum: ["pending", "confirmed", "rejected"] }).default("pending").notNull(),
+
+    // Digital Receipt
+    signature: text("signature"), // Hash code
+    timestamp: integer("timestamp", { mode: "timestamp" }),
+
+    createdAt: integer("created_at", { mode: "timestamp" }).default(sql`CURRENT_TIMESTAMP`),
+});
