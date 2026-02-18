@@ -10,7 +10,6 @@ import {
     TableHeader,
     TableRow,
 } from "@/components/ui/table";
-import ActionMenu from "@/components/ui/action-menu2";
 import { Button } from "@/components/ui";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { EquipmentFilters } from "@/components/dashboard/equipment-filters";
