@@ -52,7 +52,7 @@ export function Sidebar({ userRole, pendingCount = 0 }: { userRole: string | nul
     });
 
     return (
-        <div className="flex bg-pm-blue text-white h-screen flex-col w-64 fixed left-0 top-0">
+        <div className="hidden md:flex bg-pm-blue text-white h-screen flex-col w-64 fixed left-0 top-0" role="navigation" aria-label="Sidebar">
             <div className="p-6 border-b border-white/10">
                 <h1 className="text-2xl font-bold tracking-tight">CPI-7</h1>
                 <p className="text-xs text-slate-300 mt-1">Controle de Material Bélico</p>

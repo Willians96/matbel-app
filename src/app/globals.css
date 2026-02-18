@@ -126,4 +126,9 @@
   body {
     @apply bg-background text-foreground;
   }
+  /* improved keyboard focus for accessibility */
+  :focus-visible {
+    outline: 3px solid hsl(var(--ring));
+    outline-offset: 2px;
+  }
 }
