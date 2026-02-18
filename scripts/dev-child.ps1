@@ -28,8 +28,8 @@ function Get-LatestPanicFile {
 
 # Start turbopack in background so we can detect a panic file and fallback if needed
 $startInfo = @{
-  FilePath = "npx"
-  ArgumentList = "next","dev"
+  FilePath = "cmd.exe"
+  ArgumentList = "/c", "npx next dev"
   NoNewWindow = $true
   PassThru = $true
 }
@@ -54,7 +54,7 @@ if ($panicDetected) {
     Stop-Process -Id $proc.Id -Force -ErrorAction SilentlyContinue
   } catch {}
   Write-Host "Restarting Next with --turbo=false (webpack fallback)..."
-  & npx next dev --turbo=false
+  Start-Process -FilePath "cmd.exe" -ArgumentList "/c", "npx next dev --turbo=false" -NoNewWindow -Wait
 } else {
   Write-Host "No Turbopack panic detected in initial window. Leaving Next running (Turbopack) - check dev window for logs."
   # Wait for the background process so the script doesn't exit immediately.
