@@ -175,4 +175,19 @@
     font-size: 1.0625rem; /* 17px */
     color: hsl(var(--muted-foreground));
   }
+  /* Base rendering improvements */
+  html {
+    font-size: 16px;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+  body {
+    font-feature-settings: "kern" 1;
+    -webkit-font-kerning: normal;
+  }
+  /* Heading refinements for larger screens */
+  @media (min-width: 768px) {
+    h1 { font-size: 2.25rem; } /* 36px */
+    h2 { font-size: 1.5rem; }  /* 24px */
+  }
 }
