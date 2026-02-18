@@ -20,5 +20,12 @@ if (Test-Path ".env.local") {
 $env:PORT = $Port
 
 Write-Host "Starting next dev on port $Port..."
-npx next dev
+# First attempt: run with Turbopack (default)
+& npx next dev
+
+# If the process exited with non-zero, retry with Turbo disabled (classic webpack)
+if ($LASTEXITCODE -ne 0) {
+  Write-Warning "Turbopack failed (exit code $LASTEXITCODE). Retrying with --turbo=false (webpack)..."
+  & npx next dev --turbo=false
+}
 
