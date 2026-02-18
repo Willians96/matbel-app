@@ -5,11 +5,16 @@ import { ProfileForm } from "@/components/dashboard/profile-form";
 import { UserCog, Package } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
+import Link from "next/link";
+import { Button } from "@/components/ui/button";
+
+import { getAllUnits } from "@/server/queries/units";
 
 export default async function ProfilePage() {
     const user = await getCurrentUserProfile();
     const transactionsResult = user?.re ? await getUserActiveTransactions(user.re) : { success: false, data: [] };
     const transactions = transactionsResult.success && transactionsResult.data ? transactionsResult.data : [];
+    const units = await getAllUnits();
 
     return (
         <div className="max-w-4xl mx-auto space-y-8">
@@ -29,7 +34,7 @@ export default async function ProfilePage() {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                 {/* Left Column: Profile Form */}
                 <div className="space-y-6">
-                    <ProfileForm initialData={user} />
+                    <ProfileForm initialData={user} units={units.map(u => u.name)} />
                 </div>
 
                 {/* Right Column: Active Checkouts */}
@@ -53,7 +58,7 @@ export default async function ProfilePage() {
                                         <li key={t.id} className="flex flex-col p-4 border rounded-lg bg-slate-50">
                                             <div className="flex justify-between items-start mb-2">
                                                 <span className="font-semibold text-lg">{t.equipmentName}</span>
-                                                <Badge variant="outline" className="bg-yellow-100 text-yellow-800 border-yellow-200">
+                                                <Badge className="bg-yellow-100 text-yellow-800 border-yellow-200">
                                                     Em Uso
                                                 </Badge>
                                             </div>
@@ -66,6 +71,22 @@ export default async function ProfilePage() {
                                     ))}
                                 </ul>
                             )}
+                        </CardContent>
+                    </Card>
+
+                    <Card className="border-pm-blue/20 bg-blue-50/50">
+                        <CardHeader>
+                            <CardTitle className="text-pm-blue">Carga Pessoal (Permanente)</CardTitle>
+                            <CardDescription>
+                                Possui armamento ou colete fixo?
+                            </CardDescription>
+                        </CardHeader>
+                        <CardContent>
+                            <Link href="/dashboard/my-equipment/declare">
+                                <Button className="w-full bg-pm-blue text-white hover:bg-pm-blue/90">
+                                    Fazer Declaração de Material
+                                </Button>
+                            </Link>
                         </CardContent>
                     </Card>
                 </div>

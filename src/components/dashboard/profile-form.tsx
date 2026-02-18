@@ -40,10 +40,14 @@ interface ProfileFormProps {
         warName?: string | null;
         unit?: string | null;
     } | null;
+    units?: string[];
 }
 
-export function ProfileForm({ initialData }: ProfileFormProps) {
+export function ProfileForm({ initialData, units }: ProfileFormProps) {
     const [state, formAction] = useFormState(updateProfile, initialState);
+
+    // Default unit list if none provided (fallback)
+    const availableUnits = units && units.length > 0 ? units : UNIDADES_PM;
 
     // Toast notification effect
     useEffect(() => {
@@ -121,7 +125,7 @@ export function ProfileForm({ initialData }: ProfileFormProps) {
                                 <SelectValue placeholder="Selecione sua unidade..." />
                             </SelectTrigger>
                             <SelectContent>
-                                {UNIDADES_PM.map((u) => (
+                                {availableUnits.map((u) => (
                                     <SelectItem key={u} value={u}>{u}</SelectItem>
                                 ))}
                             </SelectContent>

@@ -48,3 +48,34 @@ export const transactions = sqliteTable("transactions", {
     status: text("status", { enum: ["active", "completed"] }).notNull().default("active"),
     notes: text("notes"),
 });
+
+export const declarations = sqliteTable("declarations", {
+    id: text("id").primaryKey().$defaultFn(() => crypto.randomUUID()),
+    userId: text("user_id").references(() => users.id).notNull(),
+
+    // User Snapshot
+    userRe: text("user_re").notNull(),
+    userName: text("user_name").notNull(),
+    userRank: text("user_rank"),
+    userUnit: text("user_unit").notNull(),
+
+    // Declared Items
+    gunSerialNumber: text("gun_serial_number"),
+    vestSerialNumber: text("vest_serial_number"),
+    hasHandcuffs: integer("has_handcuffs", { mode: "boolean" }).default(false),
+    handcuffsSerialNumber: text("handcuffs_serial_number"),
+
+    // Process Control
+    status: text("status", { enum: ["pending", "approved", "rejected"] }).default("pending").notNull(),
+    adminNotes: text("admin_notes"),
+
+    createdAt: integer("created_at", { mode: "timestamp" }).default(sql`CURRENT_TIMESTAMP`),
+    updatedAt: integer("updated_at", { mode: "timestamp" }).default(sql`CURRENT_TIMESTAMP`),
+});
+
+export const units = sqliteTable("units", {
+    id: integer("id").primaryKey({ autoIncrement: true }),
+    name: text("name").unique().notNull(),
+    active: integer("active", { mode: "boolean" }).default(true),
+    createdAt: integer("created_at", { mode: "timestamp" }).default(sql`CURRENT_TIMESTAMP`),
+});

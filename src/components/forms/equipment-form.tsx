@@ -1,4 +1,3 @@
-
 "use client"
 
 import { zodResolver } from "@hookform/resolvers/zod"
@@ -9,7 +8,6 @@ import { Button } from "@/components/ui/button"
 import {
     Form,
     FormControl,
-    FormDescription,
     FormField,
     FormItem,
     FormLabel,
@@ -21,18 +19,28 @@ import { createEquipment } from "@/server/actions/equipment"
 import { toast } from "sonner"
 import { useState } from "react"
 import { useRouter } from "next/navigation"
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 
-export function EquipmentForm() {
+interface EquipmentFormProps {
+    units?: string[];
+}
+
+export function EquipmentForm({ units }: EquipmentFormProps) {
     const [isPending, setIsPending] = useState(false);
     const router = useRouter();
+
+    // Fallback units if none provided
+    const availableUnits = units && units.length > 0 ? units : ["CPI-7", "10 BPM-I", "11 BPM-I"];
 
     const form = useForm<z.infer<typeof equipmentSchema>>({
         resolver: zodResolver(equipmentSchema),
         defaultValues: {
             name: "",
             serialNumber: "",
+            patrimony: "",
             category: "",
             status: "disponivel",
+            unit: "", // Added unit field
             observations: "",
         },
     })
@@ -59,23 +67,50 @@ export function EquipmentForm() {
 
     return (
         <Form {...form}>
-            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8 max-w-md">
+            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6 max-w-2xl">
 
-                <FormField
-                    control={form.control}
-                    name="name"
-                    render={({ field }) => (
-                        <FormItem>
-                            <FormLabel>Nome do Equipamento</FormLabel>
-                            <FormControl>
-                                <Input placeholder="Ex: Glock G22" {...field} />
-                            </FormControl>
-                            <FormMessage />
-                        </FormItem>
-                    )}
-                />
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <FormField
+                        control={form.control}
+                        name="name"
+                        render={({ field }) => (
+                            <FormItem>
+                                <FormLabel>Nome do Equipamento</FormLabel>
+                                <FormControl>
+                                    <Input placeholder="Ex: Glock G22" {...field} />
+                                </FormControl>
+                                <FormMessage />
+                            </FormItem>
+                        )}
+                    />
 
-                <div className="grid grid-cols-2 gap-4">
+                    <FormField
+                        control={form.control}
+                        name="unit"
+                        render={({ field }) => (
+                            <FormItem>
+                                <FormLabel>Unidade de Dotação</FormLabel>
+                                <Select onValueChange={field.onChange} defaultValue={field.value}>
+                                    <FormControl>
+                                        <SelectTrigger>
+                                            <SelectValue placeholder="Selecione a unidade" />
+                                        </SelectTrigger>
+                                    </FormControl>
+                                    <SelectContent>
+                                        {availableUnits.map((unit) => (
+                                            <SelectItem key={unit} value={unit}>
+                                                {unit}
+                                            </SelectItem>
+                                        ))}
+                                    </SelectContent>
+                                </Select>
+                                <FormMessage />
+                            </FormItem>
+                        )}
+                    />
+                </div>
+
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <FormField
                         control={form.control}
                         name="serialNumber"
@@ -105,7 +140,7 @@ export function EquipmentForm() {
                     />
                 </div>
 
-                <div className="grid grid-cols-2 gap-4">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <FormField
                         control={form.control}
                         name="category"
@@ -126,17 +161,19 @@ export function EquipmentForm() {
                         render={({ field }) => (
                             <FormItem>
                                 <FormLabel>Status</FormLabel>
-                                <FormControl>
-                                    <select
-                                        {...field}
-                                        className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
-                                    >
-                                        <option value="disponivel">Disponível</option>
-                                        <option value="em_uso">Em Uso</option>
-                                        <option value="manutencao">Em Manutenção</option>
-                                        <option value="baixado">Baixado</option>
-                                    </select>
-                                </FormControl>
+                                <Select onValueChange={field.onChange} defaultValue={field.value}>
+                                    <FormControl>
+                                        <SelectTrigger>
+                                            <SelectValue placeholder="Selecione o status" />
+                                        </SelectTrigger>
+                                    </FormControl>
+                                    <SelectContent>
+                                        <SelectItem value="disponivel">Disponível</SelectItem>
+                                        <SelectItem value="em_uso">Em Uso</SelectItem>
+                                        <SelectItem value="manutencao">Em Manutenção</SelectItem>
+                                        <SelectItem value="baixado">Baixado</SelectItem>
+                                    </SelectContent>
+                                </Select>
                                 <FormMessage />
                             </FormItem>
                         )}
@@ -157,7 +194,7 @@ export function EquipmentForm() {
                     )}
                 />
 
-                <Button type="submit" disabled={isPending}>
+                <Button type="submit" disabled={isPending} className="w-full md:w-auto bg-pm-blue hover:bg-pm-blue/90">
                     {isPending ? "Salvando..." : "Cadastrar Equipamento"}
                 </Button>
             </form>

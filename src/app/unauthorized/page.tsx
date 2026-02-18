@@ -21,7 +21,11 @@ export default function UnauthorizedPage() {
                 <Link href="/">
                     <Button variant="outline">Voltar ao Início</Button>
                 </Link>
-                {/* Future: Link to User Dashboard */}
+                <Link href="/dashboard/profile">
+                    <Button className="bg-pm-blue text-white hover:bg-pm-blue/90">
+                        Acessar Minha Área
+                    </Button>
+                </Link>
             </div>
         </div>
     );

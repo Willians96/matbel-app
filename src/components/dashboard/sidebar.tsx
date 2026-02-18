@@ -9,7 +9,8 @@ import {
     Package,
     Settings,
     Shield,
-    LogOut
+    LogOut,
+    FileText
 } from "lucide-react";
 
 const sidebarItems = [
@@ -24,6 +25,12 @@ const sidebarItems = [
         icon: Package,
     },
     {
+        title: "Solicitações",
+        href: "/dashboard/admin/declarations",
+        icon: FileText,
+        role: "admin",
+    },
+    {
         title: "Unidades",
         href: "/dashboard/units",
         icon: Shield,
@@ -36,8 +43,13 @@ const sidebarItems = [
     },
 ];
 
-export function Sidebar() {
+export function Sidebar({ userRole }: { userRole: string | null }) {
     const pathname = usePathname();
+
+    const filteredItems = sidebarItems.filter(item => {
+        if (!item.role) return true; // Public/Shared items
+        return item.role === userRole;
+    });
 
     return (
         <div className="flex bg-pm-blue text-white h-screen flex-col w-64 fixed left-0 top-0">
@@ -47,7 +59,7 @@ export function Sidebar() {
             </div>
 
             <nav className="flex-1 p-4 space-y-2">
-                {sidebarItems.map((item) => {
+                {filteredItems.map((item) => {
                     const Icon = item.icon;
                     const isActive = pathname === item.href;
 
