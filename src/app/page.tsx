@@ -6,7 +6,7 @@ import { DashboardLink } from "@/components/home/dashboard-link";
 
 export default function Home() {
   return (
-    <div className="flex min-h-screen items-center justify-center bg-pm-blue font-sans">
+    <main id="main" className="flex min-h-screen items-center justify-center bg-pm-blue font-sans">
       <div className="w-full max-w-md bg-white rounded-lg shadow-2xl p-8 flex flex-col items-center text-center">
 
         <div className="mb-6">
@@ -37,7 +37,7 @@ export default function Home() {
           </SignedIn>
         </div>
 
-        <div className="mt-8 text-xs text-gray-400">
+        <div className="mt-8 text-xs text-muted-foreground">
           &copy; 2026 Polícia Militar do Estado de São Paulo
         </div>
 

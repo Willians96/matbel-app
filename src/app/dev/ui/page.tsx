@@ -5,7 +5,7 @@ import { Button, Input } from "@/components/ui";
 
 export default function UIPlayground() {
   return (
-    <div className="min-h-screen bg-slate-50 py-8 px-4 sm:px-6 lg:px-8">
+    <main id="main" className="min-h-screen bg-slate-50 py-8 px-4 sm:px-6 lg:px-8">
       <div className="max-w-6xl mx-auto bg-white rounded-lg shadow p-6 sm:p-8">
         <header className="mb-6">
           <h1 className="text-3xl sm:text-4xl font-bold mb-1">UI Preview — Component Playground</h1>
