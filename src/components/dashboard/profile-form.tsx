@@ -3,7 +3,7 @@
 import { useFormState } from "react-dom";
 import { useFormStatus } from "react-dom";
 import { updateProfile, ProfileState } from "@/server/actions/profile";
-import { Button } from "@/components/ui/button";
+import { Button } from "@/components/ui";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import {

@@ -2,7 +2,7 @@
 
 import { useFormStatus } from "react-dom";
 import { createTransfer } from "@/server/actions/transfers";
-import { Button } from "@/components/ui/button";
+import { Button } from "@/components/ui";
 import { Label } from "@/components/ui/label";
 import {
     Select,

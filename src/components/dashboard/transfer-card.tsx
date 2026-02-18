@@ -2,7 +2,7 @@
 
 import { useTransition } from "react";
 import { confirmTransfer, rejectTransfer } from "@/server/actions/transfers";
-import { Button } from "@/components/ui/button";
+import { Button } from "@/components/ui";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { toast } from "sonner";
 import { CheckCircle, XCircle, ArrowRight, ShieldCheck } from "lucide-react";

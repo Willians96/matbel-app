@@ -1,7 +1,7 @@
 
 import { getAllUnits } from "@/server/queries/units";
 import { createUnit, deleteUnit } from "@/server/actions/units";
-import { Button } from "@/components/ui/button";
+import { Button } from "@/components/ui";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";

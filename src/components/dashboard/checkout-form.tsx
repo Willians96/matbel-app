@@ -4,7 +4,7 @@ import { useFormState } from "react-dom";
 import { useFormStatus } from "react-dom";
 import { processCheckout, CheckoutState } from "@/server/actions/checkout";
 import { getUserByRE } from "@/server/actions/user-lookup";
-import { Button } from "@/components/ui/button";
+import { Button } from "@/components/ui";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import {

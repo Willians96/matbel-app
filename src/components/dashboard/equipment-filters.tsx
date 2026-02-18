@@ -10,7 +10,7 @@ import {
     SelectTrigger,
     SelectValue,
 } from "@/components/ui/select";
-import { Button } from "@/components/ui/button";
+import { Button } from "@/components/ui";
 import { UNIDADES_PM } from "@/config/units";
 import { useCallback, useState, useEffect } from "react";
 import { Search, X, Filter } from "lucide-react";
