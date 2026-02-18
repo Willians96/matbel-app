@@ -87,7 +87,7 @@ export default function UIPlayground() {
           </div>
         </section>
       </div>
-    </div>
+    </main>
   );
 }
 
