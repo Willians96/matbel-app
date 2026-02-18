@@ -14,6 +14,7 @@
     "lint": "eslint",
     "test:e2e": "playwright test",
     "test:unit": "vitest --environment jsdom --run",
+    "test:a11y": "node scripts/run-axe.js",
     "visual:capture": "node scripts/capture-screenshots.js",
     "test:visual": "node scripts/compare-screenshots.js"
   },
@@ -52,6 +53,7 @@
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
+    "axe-core": "^4.11.1",
     "dotenv": "^17.3.1",
     "drizzle-kit": "^0.31.9",
     "eslint": "^9",
