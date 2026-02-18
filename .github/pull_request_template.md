@@ -8,6 +8,7 @@ Resuma brevemente o propósito deste PR e as mudanças principais.
 - [ ] Rodei `npm run lint` e corrigi os avisos/erros relevantes.
 - [ ] Rodei `npm run test:unit` localmente e todos passaram.
 - [ ] Rodei `npm run build` localmente (se aplicável).
+ - [ ] Rodei `npm run test:a11y` e validei os relatórios em `artifacts/axe-reports/` (se aplicável).
 - [ ] Atualizei/adicionei documentações ou notas de migração, se necessário.
 - [ ] Não há alterações sensíveis em `.env.local` ou segredos.
 
