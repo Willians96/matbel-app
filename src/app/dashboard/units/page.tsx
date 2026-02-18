@@ -48,7 +48,7 @@ export default async function UnitsPage() {
                     <CardContent>
                         <form action={addUnit} className="flex gap-2">
                             <Input name="name" placeholder="Nome da Unidade (Ex: 10 BPM-I)" required className="flex-1" />
-                            <Button type="submit" className="bg-pm-blue hover:bg-pm-blue/90">
+                            <Button type="submit" className="bg-pm-blue text-white hover:bg-pm-blue/90">
                                 <Plus className="w-4 h-4 mr-2" /> Adicionar
                             </Button>
                         </form>
