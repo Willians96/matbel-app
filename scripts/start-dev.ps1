@@ -43,23 +43,8 @@ if (-not $port) {
 
 Write-Host "Starting dev server on port $port (new window)..."
 
-# Build command to load .env.local into the child process and start next dev with PORT
-$childCmd = @"
-Set-Location '$projectRoot'
-if (Test-Path .env.local) {
-  Get-Content .env.local | ForEach-Object {
-    if ($_ -match '^\s*([^#=]+)=(.*)$') {
-      \$name = \$matches[1].Trim()
-      \$value = \$matches[2].Trim()
-      \$env:\$name = \$value
-    }
-  }
-}
-\$env:PORT = '$port'
-npx next dev
-"@
-
-Start-Process -FilePath "powershell" -ArgumentList "-NoExit", "-Command", $childCmd -WorkingDirectory $projectRoot
+# Start a child PowerShell running the dev server (loads .env.local and sets PORT)
+Start-Process -FilePath "powershell" -ArgumentList "-NoExit", "-File", ".\scripts\dev-child.ps1", "-Port", $port -WorkingDirectory $projectRoot
 
 Write-Host "Waiting for server to become available at http://localhost:$port ..."
 
