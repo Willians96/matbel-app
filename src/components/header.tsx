@@ -2,7 +2,7 @@
 'use client';
 
 import { useState } from "react";
-import { SignInButton, SignedIn, SignedOut, UserButton } from "@clerk/nextjs";
+import { SignedIn, SignedOut, UserButton } from "@clerk/nextjs";
 import Link from "next/link";
 import { Menu } from "lucide-react";
 
@@ -17,9 +17,11 @@ export function Header() {
 
       <nav className="hidden md:flex gap-4 items-center">
         <SignedOut>
-          <SignInButton mode="modal">
-            <button className="text-sm font-medium hover:underline">Entrar</button>
-          </SignInButton>
+          <SignedOut>
+            <Link href="/dashboard" className="text-sm font-medium hover:underline">
+              Entrar
+            </Link>
+          </SignedOut>
         </SignedOut>
         <SignedIn>
           <Link href="/dashboard" className="text-sm font-medium hover:underline flex items-center">
@@ -45,9 +47,11 @@ export function Header() {
         <div className="absolute right-4 top-16 z-50 w-64 bg-white rounded-lg shadow-md p-4 md:hidden">
           <div className="flex flex-col gap-3">
             <SignedOut>
-              <SignInButton mode="modal">
-                <button className="text-left w-full text-sm font-medium">Entrar</button>
-              </SignInButton>
+              <SignedOut>
+                <Link href="/dashboard" className="text-left w-full text-sm font-medium">
+                  Entrar
+                </Link>
+              </SignedOut>
             </SignedOut>
             <SignedIn>
               <Link href="/dashboard" className="text-sm font-medium hover:underline">
