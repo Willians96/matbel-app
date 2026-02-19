@@ -38,10 +38,11 @@ export async function getEquipments(filters?: EquipmentFilters, page = 1, pageSi
 
         // pagination
         const offset = Math.max(0, (page - 1) * pageSize);
-        let q = db.select().from(equipamentos).orderBy(desc(equipamentos.createdAt)).limit(pageSize).offset(offset);
+        let q = db.select().from(equipamentos);
         if (conditions.length > 0) {
             q = q.where(and(...conditions));
         }
+        q = q.orderBy(desc(equipamentos.createdAt)).limit(pageSize).offset(offset);
         const data = await q;
 
         return { success: true, data, total };
