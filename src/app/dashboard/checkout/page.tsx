@@ -13,9 +13,9 @@ export default async function CheckoutPage() {
                     <ShieldCheck className="w-6 h-6" />
                 </div>
                 <div>
-                    <h2 className="text-3xl font-bold tracking-tight text-slate-900">Cautela de Material</h2>
+                    <h2 className="text-3xl font-bold tracking-tight text-slate-900">Carga Pessoal</h2>
                     <p className="text-muted-foreground">
-                        Registro de retirada de armamento e equipamentos.
+                        Registro de entrega de armamento e equipamentos para carga pessoal.
                     </p>
                 </div>
             </div>

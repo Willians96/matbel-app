@@ -1,7 +1,7 @@
 "use client";
 
-import { useFormState } from "react-dom";
 import { useFormStatus } from "react-dom";
+import { useActionState } from "react";
 import { processCheckout, CheckoutState } from "@/server/actions/checkout";
 import { getUserByRE } from "@/server/actions/user-lookup";
 import { Button } from "@/components/ui/button";
@@ -30,13 +30,13 @@ function SubmitButton() {
 
     return (
         <Button type="submit" className="w-full bg-pm-blue hover:bg-pm-blue/90" disabled={pending}>
-            {pending ? "Processando..." : "Confirmar Retirada (Cautela)"}
+            {pending ? "Processando..." : "Confirmar Carga Pessoal"}
         </Button>
     );
 }
 
 export function CheckoutForm() {
-    const [state, formAction] = useFormState(processCheckout, initialState);
+    const [state, formAction, isPending] = useActionState(processCheckout, initialState);
     const [loadingUser, setLoadingUser] = useState(false);
 
     // Auto-fill states
@@ -72,7 +72,7 @@ export function CheckoutForm() {
     return (
         <Card>
             <CardHeader>
-                <CardTitle>Dados da Retirada</CardTitle>
+                <CardTitle>Dados da Carga Pessoal</CardTitle>
                 <CardDescription>Preencha os dados do Policial e do Equipamento.</CardDescription>
             </CardHeader>
             <CardContent>

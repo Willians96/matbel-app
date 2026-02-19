@@ -17,12 +17,20 @@ const client = createClient({
     authToken,
 });
 
+const targetEmail = process.argv[2];
+
+if (!targetEmail) {
+    console.error('Please provide an email address');
+    console.error('Usage: node scripts/promote-admin.mjs <email>');
+    process.exit(1);
+}
+
 async function promote() {
-    console.log('Promoting user to admin (Raw SQL)...');
+    console.log(`Promoting user ${targetEmail} to admin...`);
     try {
         await client.execute({
             sql: "UPDATE users SET role = 'admin' WHERE email = ?",
-            args: ['michel.wmoraes@gmail.com']
+            args: [targetEmail]
         });
 
         console.log('Update command sent.');
@@ -30,7 +38,7 @@ async function promote() {
         // Verify
         const result = await client.execute({
             sql: "SELECT * FROM users WHERE email = ?",
-            args: ['michel.wmoraes@gmail.com']
+            args: [targetEmail]
         });
 
         console.log('User status:', result.rows);
