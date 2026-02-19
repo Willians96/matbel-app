@@ -75,11 +75,19 @@ export default async function UnitsPage() {
                                         <TableRow key={unit.id}>
                                             <TableCell className="font-medium">{unit.name}</TableCell>
                                             <TableCell className="text-right">
-                                                <form action={removeUnit.bind(null, unit.id)}>
-                                                    <Button size="icon" className="h-8 w-8 bg-transparent text-red-500 hover:text-red-700 hover:bg-red-50 shadow-none">
-                                                        <Trash2 className="w-4 h-4" />
-                                                    </Button>
-                                                </form>
+                                                <ActionMenu
+                                                    onView={() => (window.location.href = `/dashboard/units/${unit.id}`)}
+                                                    onEdit={() => (window.location.href = `/dashboard/units/${unit.id}/edit`)}
+                                                    onDelete={async () => {
+                                                        try {
+                                                            const res = await fetch(`/api/units/${unit.id}`, { method: "DELETE" });
+                                                            if (!res.ok) throw new Error("delete failed");
+                                                            window.location.reload();
+                                                        } catch {
+                                                            alert("Falha ao excluir a unidade.");
+                                                        }
+                                                    }}
+                                                />
                                             </TableCell>
                                         </TableRow>
                                     ))}

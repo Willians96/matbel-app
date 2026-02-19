@@ -34,7 +34,9 @@ export async function getEquipments(filters?: EquipmentFilters) {
             .where(and(...conditions))
             .orderBy(desc(equipamentos.createdAt));
 
-        return { success: true, data };
+        const total = data.length;
+
+        return { success: true, data, total };
     } catch (error) {
         console.error("Erro ao buscar equipamentos:", error);
         return { success: false, error: "Falha ao carregar dados." };

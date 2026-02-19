@@ -31,8 +31,11 @@ export default async function EquipmentPage({
         status: params?.status,
     };
 
+    const pageNum = Number(params?.page || 1);
+    const pageSize = Number(params?.pageSize || 10);
     const result = await getEquipments(filters);
     const equipments = result.success ? result.data : [];
+    const total = result.success && typeof result.total === "number" ? result.total : (equipments ? equipments.length : 0);
 
     return (
         <div className="space-y-6">
@@ -74,66 +77,7 @@ export default async function EquipmentPage({
                     </div>
 
                     <div className="rounded-md border border-slate-100">
-                        <Table>
-                            <TableHeader className="bg-slate-50">
-                                    <TableRow>
-                                    <TableHead>Serial</TableHead>
-                                    <TableHead>Patrimônio</TableHead>
-                                    <TableHead>Nome</TableHead>
-                                    <TableHead>Categoria</TableHead>
-                                    <TableHead>Unidade</TableHead>
-                                    <TableHead>Status</TableHead>
-                                    <TableHead className="w-[80px] text-right">Ações</TableHead>
-                                </TableRow>
-                            </TableHeader>
-                            <TableBody>
-                                {equipments?.length === 0 ? (
-                                    <TableRow>
-                                        <TableCell colSpan={6} className="h-32 text-center text-muted-foreground">
-                                            Nenhum equipamento encontrado com os filtros atuais.
-                                        </TableCell>
-                                    </TableRow>
-                                ) : (
-                                    equipments?.map((item) => (
-                                        <TableRow key={item.id} className="hover:bg-slate-50/50">
-                                            <TableCell className="font-mono font-medium text-slate-700">{item.serialNumber}</TableCell>
-                                            <TableCell className="text-slate-600">{item.patrimony || "-"}</TableCell>
-                                            <TableCell className="font-medium text-slate-900">{item.name}</TableCell>
-                                            <TableCell>{item.category}</TableCell>
-                                            <TableCell>{item.unit}</TableCell>
-                                            <TableCell>
-                                                <span className={`px-2.5 py-0.5 rounded-full text-xs font-semibold border
-                                                    ${item.status === 'disponivel' ? 'bg-green-50 text-green-700 border-green-200' :
-                                                        item.status === 'em_uso' ? 'bg-yellow-50 text-yellow-700 border-yellow-200' :
-                                                            item.status === 'manutencao' ? 'bg-red-50 text-red-700 border-red-200' :
-                                                                'bg-gray-100 text-gray-700 border-gray-200'
-                                                    }
-                                                `}>
-                                                    {item.status === 'disponivel' ? 'Disponível' :
-                                                        item.status === 'em_uso' ? 'Em Uso' :
-                                                            item.status === 'manutencao' ? 'Manutenção' : 'Baixado'}
-                                                </span>
-                                            </TableCell>
-                                            <TableCell className="text-right">
-                                                <ActionMenu
-                                                    onView={() => (window.location.href = `/dashboard/equipment/${item.id}`)}
-                                                    onEdit={() => (window.location.href = `/dashboard/equipment/${item.id}/edit`)}
-                                                    onDelete={async () => {
-                                                        try {
-                                                            const res = await fetch(`/api/equipment/${item.id}`, { method: "DELETE" });
-                                                            if (!res.ok) throw new Error("delete failed");
-                                                            window.location.reload();
-                                                        } catch (e) {
-                                                            alert("Falha ao excluir o equipamento.");
-                                                        }
-                                                    }}
-                                                />
-                                            </TableCell>
-                                        </TableRow>
-                                    ))
-                                )}
-                            </TableBody>
-                        </Table>
+                        <EquipmentTableClient items={equipments} initialPage={pageNum} pageSize={pageSize} />
                     </div>
                 </CardContent>
             </Card>
