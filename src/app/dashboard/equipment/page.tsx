@@ -16,6 +16,8 @@ import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/com
 import { EquipmentFilters } from "@/components/dashboard/equipment-filters";
 import { BulkImport } from "@/components/dashboard/bulk-import";
 import { checkAdmin } from "@/server/auth";
+import dynamic from "next/dynamic";
+const EquipmentTableClient = dynamic(() => import("@/components/equipment/EquipmentTableClient"), { ssr: false });
 
 export default async function EquipmentPage({
     searchParams,
