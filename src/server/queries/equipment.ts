@@ -25,7 +25,7 @@ export async function getEquipments(filters?: EquipmentFilters) {
             conditions.push(eq(equipamentos.unit, filters.unit));
         }
         if (filters?.status) {
-            conditions.push(eq(equipamentos.status, filters.status as any));
+            conditions.push(eq(equipamentos.status, filters.status as "disponivel" | "em_uso" | "manutencao" | "baixado"));
         }
 
         const data = await db

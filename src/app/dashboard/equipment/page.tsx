@@ -10,7 +10,7 @@ import {
     TableHeader,
     TableRow,
 } from "@/components/ui/table";
-import { Button } from "@/components/ui/button";
+import { Button } from "@/components/ui";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { EquipmentFilters } from "@/components/dashboard/equipment-filters";
 import { BulkImport } from "@/components/dashboard/bulk-import";
@@ -45,6 +45,11 @@ export default async function EquipmentPage({
                 <Link href="/dashboard/equipment/new">
                     <Button className="gap-2 bg-pm-blue text-white hover:bg-pm-blue/90">
                         <Plus className="h-4 w-4" /> Novo Equipamento
+                    </Button>
+                </Link>
+                <Link href="/dashboard/equipment/allocate">
+                    <Button className="gap-2 bg-indigo-600 text-white hover:bg-indigo-700">
+                        <Package className="h-4 w-4" /> Entregar Material
                     </Button>
                 </Link>
             </div>

@@ -3,7 +3,7 @@ import { db } from "@/db";
 import { declarations } from "@/db/schema";
 import { eq, desc } from "drizzle-orm";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription, CardFooter } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
+import { Button } from "@/components/ui";
 import { CheckCircle, XCircle, FileText } from "lucide-react";
 import { approveDeclaration, rejectDeclaration } from "@/server/actions/declarations-admin";
 import { revalidatePath } from "next/cache";
