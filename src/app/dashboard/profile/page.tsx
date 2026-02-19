@@ -2,7 +2,8 @@
 import { getCurrentUserProfile } from "@/server/queries/user";
 import { getUserActiveTransactions } from "@/server/queries/transactions";
 import { ProfileForm } from "@/components/dashboard/profile-form";
-import { UserCog, Package } from "lucide-react";
+import { UserCog, Package, LogOut } from "lucide-react";
+import { SignOutButton } from "@clerk/nextjs";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import Link from "next/link";
@@ -90,6 +91,15 @@ export default async function ProfilePage() {
                         </CardContent>
                     </Card>
                 </div>
+            </div>
+            {/* Fallback Sign Out for trapped users */}
+            <div className="flex justify-center pt-8 border-t">
+                <SignOutButton>
+                    <Button variant="destructive" className="gap-2">
+                        <LogOut className="w-4 h-4" />
+                        Sair do Sistema (Trocar Conta)
+                    </Button>
+                </SignOutButton>
             </div>
         </div>
     );
