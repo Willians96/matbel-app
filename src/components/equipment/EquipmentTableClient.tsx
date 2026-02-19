@@ -11,8 +11,8 @@ import {
 } from "@/components/ui/table";
 import ActionMenu from "@/components/ui/action-menu";
 
-export default function EquipmentTableClient({ items, initialPage = 1, pageSize = 10 }: {
-  items: any[];
+export default function EquipmentTableClient({ items = [], initialPage = 1, pageSize = 10 }: {
+  items?: any[];
   initialPage?: number;
   pageSize?: number;
 }) {
