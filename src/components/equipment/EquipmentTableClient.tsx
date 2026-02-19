@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect } from \"react\";
+import React, { useState, useEffect } from "react";
 import {
   Table,
   TableBody,
@@ -8,8 +8,8 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from \"@/components/ui/table\";
-import ActionMenu from \"@/components/ui/action-menu\";
+} from "@/components/ui/table";
+import ActionMenu from "@/components/ui/action-menu";
 
 export default function EquipmentTableClient({ items = [], initialPage = 1, pageSize = 10 }: {
   items?: any[];
