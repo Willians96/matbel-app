@@ -78,7 +78,9 @@ export function ProfileForm({ initialData, units }: ProfileFormProps) {
                             defaultValue={initialData?.re || ""}
                             required
                         />
-                        <p className="text-xs text-muted-foreground">Digite apenas números e dígito.</p>
+                        <p className="text-sm text-muted-foreground">
+                            Seus dados pessoais e funcionais. Para alterações de patente ou unidade, contate o administrador.
+                        </p>
                     </div>
 
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">

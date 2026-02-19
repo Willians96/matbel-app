@@ -11,6 +11,7 @@ export async function getUserByRE(re: string) {
         const user = await db.select().from(users).where(eq(users.re, re)).get();
         if (user) {
             return {
+                id: user.id,
                 name: user.warName || user.name,
                 unit: user.unit,
                 rank: user.rank

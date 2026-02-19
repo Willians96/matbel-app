@@ -1,4 +1,5 @@
 import { Sidebar } from "@/components/dashboard/sidebar";
+import { MobileNavigation } from "@/components/dashboard/mobile-nav";
 import { DashboardHeader } from "@/components/dashboard/header";
 import PageTransition from "@/components/ui/page-transition";
 import { getUserRole } from "@/server/auth";
@@ -26,8 +27,10 @@ export default async function DashboardLayout({
     return (
         <div className="flex min-h-screen bg-slate-50">
             <Sidebar userRole={role} pendingCount={pendingCount} />
-            <div className="flex-1 ml-64 flex flex-col">
-                <DashboardHeader />
+            <div className="flex-1 md:ml-64 flex flex-col min-h-screen">
+                <DashboardHeader>
+                    <MobileNavigation userRole={role} pendingCount={pendingCount} />
+                </DashboardHeader>
                 <main className="flex-1 p-8 overflow-y-auto">
                     <PageTransition>{children}</PageTransition>
                 </main>

@@ -1,0 +1,2 @@
+O próximo passo é que precisamos de recursos tanto para a entrega quanto para o recebimento. Quando o admin entrega um equipamento novo, o usuário recebedor recebe uma notificação para confirmar esse recebimento. Isso que foi entregue fica como carga do usuário e, se for o usuário entregando, fica como carga da unidade. Após esse trâmite, ambos recebem um recibo assinado digitalmente atrás da ação recebida e arquivada para consulta das partes.
+

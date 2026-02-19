@@ -47,6 +47,11 @@ export default async function EquipmentPage({
                         <Plus className="h-4 w-4" /> Novo Equipamento
                     </Button>
                 </Link>
+                <Link href="/dashboard/equipment/allocate">
+                    <Button className="gap-2 bg-indigo-600 text-white hover:bg-indigo-700">
+                        <Package className="h-4 w-4" /> Entregar Material
+                    </Button>
+                </Link>
             </div>
 
             <Card className="border-slate-100 shadow-sm">

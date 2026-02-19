@@ -40,3 +40,16 @@ export async function getEquipments(filters?: EquipmentFilters) {
         return { success: false, error: "Falha ao carregar dados." };
     }
 }
+
+export async function getUserEquipment(userId: string) {
+    try {
+        const data = await db.query.equipamentos.findMany({
+            where: eq(equipamentos.userId, userId),
+            orderBy: [desc(equipamentos.updatedAt)],
+        });
+        return { success: true, data };
+    } catch (error) {
+        console.error("Erro ao buscar equipamentos do usuário:", error);
+        return { success: false, data: [] };
+    }
+}

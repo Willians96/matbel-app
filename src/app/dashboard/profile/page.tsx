@@ -50,6 +50,7 @@ export default async function ProfilePage() {
                         <CardContent>
                             {transactions.length === 0 ? (
                                 <div className="text-center py-8 text-muted-foreground">
+                                    <p className="text-sm font-medium">Itens em Carga Pessoal</p>
                                     <p>Nenhum material cautelado.</p>
                                 </div>
                             ) : (

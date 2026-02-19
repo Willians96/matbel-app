@@ -48,7 +48,7 @@ export function AnalyticsCards({ data }: AnalyticsCardsProps) {
                     <CardContent>
                         <div className="text-2xl font-bold text-slate-900">{data.total}</div>
                         <p className="text-xs text-muted-foreground">
-                            Arsenal completo registrado
+                            +12% em relação ao mês passado
                         </p>
                     </CardContent>
                 </Card>
@@ -74,8 +74,8 @@ export function AnalyticsCards({ data }: AnalyticsCardsProps) {
             <motion.div variants={item}>
                 <Card className="bg-white border-slate-100 shadow-sm hover:shadow-md transition-shadow duration-200">
                     <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                        <CardTitle className="text-sm font-medium text-yellow-600">
-                            Em Uso (Cautelados)
+                        <CardTitle className="text-sm font-medium">
+                            Cargas Ativas
                         </CardTitle>
                         <AlertTriangle className="h-4 w-4 text-yellow-600" />
                     </CardHeader>
