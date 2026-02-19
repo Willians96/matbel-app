@@ -4,8 +4,13 @@ import { Settings, ShieldAlert, Wrench } from "lucide-react";
 
 import { checkAdmin } from "@/server/auth";
 
+import { getAllUsers } from "@/server/queries/users";
+import { UserList } from "@/components/dashboard/user-list";
+
 export default async function SettingsPage() {
     await checkAdmin();
+    const users = await getAllUsers(); // Fetch users
+
     return (
         <div className="space-y-6">
             <div className="flex items-center gap-3">
@@ -37,7 +42,6 @@ export default async function SettingsPage() {
                                 <p className="font-medium">Status do Sistema</p>
                                 <p className="text-sm text-green-600">Operacional</p>
                             </div>
-                            {/* Toggle would go here - placeholder for now */}
                             <div className="h-6 w-12 bg-slate-200 rounded-full cursor-not-allowed opacity-50 relative">
                                 <div className="absolute left-1 top-1 h-4 w-4 bg-white rounded-full shadow-sm"></div>
                             </div>
@@ -68,6 +72,9 @@ export default async function SettingsPage() {
                     </CardContent>
                 </Card>
             </div>
+
+            {/* User Management Section */}
+            <UserList users={users as any} />
         </div>
     );
 }
