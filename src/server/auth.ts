@@ -27,6 +27,20 @@ export async function checkAdmin() {
 export async function getUserRole() {
     const user = await currentUser();
     if (!user) return null;
+
     const dbUser = await db.select().from(users).where(eq(users.id, user.id)).get();
-    return dbUser?.role ?? null;
+
+    if (!dbUser) {
+        // Lazy Sync: User authenticating for the first time
+        // We import dynamically to avoid circular dependencies if they arise, 
+        // though currently safe.
+        const { syncUser } = await import('@/server/actions/user');
+        await syncUser();
+
+        // Fetch again after sync
+        const newDbUser = await db.select().from(users).where(eq(users.id, user.id)).get();
+        return newDbUser?.role ?? 'user';
+    }
+
+    return dbUser.role;
 }

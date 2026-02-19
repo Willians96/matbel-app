@@ -9,7 +9,14 @@ export async function getCurrentUserProfile() {
     if (!user) return null;
 
     try {
-        const dbUser = await db.select().from(users).where(eq(users.id, user.id)).get();
+        let dbUser = await db.select().from(users).where(eq(users.id, user.id)).get();
+
+        if (!dbUser) {
+            const { syncUser } = await import('@/server/actions/user');
+            await syncUser();
+            dbUser = await db.select().from(users).where(eq(users.id, user.id)).get();
+        }
+
         return dbUser;
     } catch (error) {
         console.error("Error fetching user profile:", error);
