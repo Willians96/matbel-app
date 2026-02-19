@@ -38,12 +38,23 @@ export async function getEquipments(filters?: EquipmentFilters, page = 1, pageSi
 
         // pagination
         const offset = Math.max(0, (page - 1) * pageSize);
-        let q = db.select().from(equipamentos);
+        let data;
         if (conditions.length > 0) {
-            q = q.where(and(...conditions));
+            data = await db
+                .select()
+                .from(equipamentos)
+                .where(and(...conditions))
+                .orderBy(desc(equipamentos.createdAt))
+                .limit(pageSize)
+                .offset(offset);
+        } else {
+            data = await db
+                .select()
+                .from(equipamentos)
+                .orderBy(desc(equipamentos.createdAt))
+                .limit(pageSize)
+                .offset(offset);
         }
-        q = q.orderBy(desc(equipamentos.createdAt)).limit(pageSize).offset(offset);
-        const data = await q;
 
         return { success: true, data, total };
     } catch (error) {
