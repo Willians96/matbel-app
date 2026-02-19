@@ -1,6 +1,6 @@
 import Image from "next/image";
 import Logo from "@/components/logo";
-import { SignInButton, SignedIn, SignedOut } from "@clerk/nextjs";
+import { SignedIn, SignedOut } from "@clerk/nextjs";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import { DashboardLink } from "@/components/home/dashboard-link";
@@ -19,12 +19,12 @@ export default function Home() {
 
         <div className="space-y-4 w-full">
           <SignedOut>
-            <SignInButton mode="modal">
+            <Link href="/dashboard" className="w-full">
               <button className="w-full bg-pm-blue text-white font-semibold py-3 px-4 rounded-md hover:bg-[#001a38] transition-colors flex items-center justify-center gap-2">
                 Entrar no Sistema
                 <ArrowRight className="w-4 h-4" />
               </button>
-            </SignInButton>
+            </Link>
           </SignedOut>
 
           <SignedIn>
