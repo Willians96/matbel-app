@@ -3,6 +3,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { SignOutButton } from "@clerk/nextjs";
 import { cn } from "@/lib/utils";
 import {
     LayoutDashboard,
@@ -88,6 +89,15 @@ export function Sidebar({ userRole, pendingCount = 0 }: { userRole: string | nul
                     )
                 })}
             </nav>
+
+            <div className="p-4">
+                <SignOutButton>
+                    <button className="flex w-full items-center gap-3 px-4 py-3 text-sm font-medium text-slate-300 hover:bg-white/5 hover:text-white rounded-md transition-colors">
+                        <LogOut className="h-5 w-5" />
+                        Sair
+                    </button>
+                </SignOutButton>
+            </div>
 
             <div className="p-4 border-t border-white/10">
                 <p className="text-xs text-center text-white/70">© 2026 PMESP</p>
