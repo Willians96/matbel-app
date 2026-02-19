@@ -4,7 +4,7 @@ const fs = require('fs');
 const path = require('path');
 
 async function capture() {
-  const outDir = path.resolve(process.cwd(), 'artifacts');
+  const outDir = path.resolve(process.cwd(), '.cache', 'artifacts');
   if (!fs.existsSync(outDir)) fs.mkdirSync(outDir, { recursive: true });
 
   // Desktop

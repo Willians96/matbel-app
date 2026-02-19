@@ -28,8 +28,8 @@ async function compare(a, b, out) {
 
 async function main() {
   const baseDir = path.resolve('tests/visual/baseline');
-  const curDir = path.resolve('artifacts');
-  const outDir = path.resolve('artifacts/visual-diffs');
+  const curDir = path.resolve('.cache', 'artifacts');
+  const outDir = path.resolve('.cache', 'artifacts', 'visual-diffs');
   if (!fs.existsSync(outDir)) fs.mkdirSync(outDir, { recursive: true });
 
   const files = ['ui-desktop.png', 'ui-mobile.png', 'ui-tablet.png'];

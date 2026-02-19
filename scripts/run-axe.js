@@ -31,7 +31,7 @@ function sanitize(url) {
 }
 
 async function main() {
-  const outDir = path.resolve(process.cwd(), 'artifacts', 'axe-reports');
+  const outDir = path.resolve(process.cwd(), '.cache', 'artifacts', 'axe-reports');
   if (!fs.existsSync(outDir)) fs.mkdirSync(outDir, { recursive: true });
 
   const pages = [
