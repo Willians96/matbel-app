@@ -10,7 +10,7 @@ import {
     SelectTrigger,
     SelectValue,
 } from "@/components/ui/select";
-import { Button } from "@/components/ui/button";
+import { Button } from "@/components/ui";
 import { UNIDADES_PM } from "@/config/units";
 import { useCallback, useState, useEffect } from "react";
 import { Search, X, Filter } from "lucide-react";
@@ -27,10 +27,20 @@ export function EquipmentFilters() {
 
     // Update state when URL params change (e.g. clear filters)
     useEffect(() => {
-        setSerialNumber(searchParams.get("serialNumber") || "");
-        setPatrimony(searchParams.get("patrimony") || "");
-        setUnit(searchParams.get("unit") || "");
-        setStatus(searchParams.get("status") || "");
+        const sn = searchParams.get("serialNumber") || "";
+        const pt = searchParams.get("patrimony") || "";
+        const u = searchParams.get("unit") || "";
+        const st = searchParams.get("status") || "";
+
+        // Use functional updates to avoid unnecessary re-renders
+        /* eslint-disable-next-line react-hooks/set-state-in-effect */
+        setSerialNumber((prev) => (prev === sn ? prev : sn));
+        /* eslint-disable-next-line react-hooks/set-state-in-effect */
+        setPatrimony((prev) => (prev === pt ? prev : pt));
+        /* eslint-disable-next-line react-hooks/set-state-in-effect */
+        setUnit((prev) => (prev === u ? prev : u));
+        /* eslint-disable-next-line react-hooks/set-state-in-effect */
+        setStatus((prev) => (prev === st ? prev : st));
     }, [searchParams]);
 
     const applyFilters = () => {

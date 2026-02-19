@@ -3,7 +3,7 @@ import { UserButton } from "@clerk/nextjs";
 
 export function DashboardHeader() {
     return (
-        <header className="h-16 border-b bg-white flex items-center justify-between px-6 sticky top-0 z-10 w-full">
+        <div role="region" aria-label="Dashboard header" className="h-16 border-b bg-white flex items-center justify-between px-6 sticky top-0 z-10 w-full">
             <div className="text-sm text-muted-foreground">
                 Bem-vindo ao Sistema
             </div>
@@ -13,6 +13,6 @@ export function DashboardHeader() {
                 </div>
                 <UserButton afterSignOutUrl="/" />
             </div>
-        </header>
+        </div>
     );
 }

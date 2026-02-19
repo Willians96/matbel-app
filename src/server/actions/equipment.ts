@@ -30,7 +30,7 @@ export async function createEquipment(values: z.infer<typeof equipmentSchema>) {
             patrimony: patrimony || null,
             category,
             unit,
-            status: status as any, // Enum casing might need adjustment if schema is strict
+            status: status as "disponivel" | "em_uso" | "manutencao" | "baixado",
             observations,
             userId: user.id,
             acquisitionDate: new Date(),
@@ -38,8 +38,9 @@ export async function createEquipment(values: z.infer<typeof equipmentSchema>) {
 
         revalidatePath("/dashboard/equipment");
         return { success: true, message: "Equipamento cadastrado com sucesso!" };
-    } catch (error: any) {
-        if (error.message?.includes("UNIQUE constraint failed")) {
+    } catch (error) {
+        const msg = (error as Error & { message?: string })?.message;
+        if (msg?.includes("UNIQUE constraint failed")) {
             return { success: false, message: "Este número de série já existe." };
         }
         console.error("Erro ao criar equipamento:", error);

@@ -54,8 +54,11 @@
   --card-foreground: 222.2 84% 4.9%;
   --popover: 0 0% 100%;
   --popover-foreground: 222.2 84% 4.9%;
-  --primary: 222.2 47.4% 11.2%;
+  /* primary color (HSL) used by Tailwind tokens */
+  --primary: 210 40% 8%;
   --primary-foreground: 210 40% 98%;
+  /* focus / ring color for accessible outlines */
+  --focus-ring: 210 40% 30%;
   --secondary: 210 40% 96.1%;
   --secondary-foreground: 222.2 47.4% 11.2%;
   --muted: 210 40% 96.1%;
@@ -125,5 +128,74 @@
 
   body {
     @apply bg-background text-foreground;
+  }
+  /* Visible skip link for keyboard users */
+  .skip-link {
+    position: absolute;
+    left: -9999px;
+    top: auto;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+  }
+  .skip-link:focus,
+  .skip-link:active {
+    left: 1rem;
+    top: 1rem;
+    width: auto;
+    height: auto;
+    padding: 0.5rem 0.75rem;
+    background: hsl(var(--primary));
+    color: hsl(var(--primary-foreground));
+    border-radius: 0.25rem;
+    z-index: 9999;
+  }
+  /* improved keyboard focus for accessibility */
+  :focus-visible {
+    outline: 3px solid hsl(var(--ring));
+    outline-offset: 2px;
+  }
+  /* Typography scale and spacing refinements */
+  h1 {
+    font-size: 1.875rem; /* 30px */
+    line-height: 1.15;
+    margin-bottom: 0.5rem;
+    letter-spacing: -0.02em;
+  }
+  h2 {
+    font-size: 1.375rem; /* 22px */
+    line-height: 1.2;
+    margin-bottom: 0.5rem;
+  }
+  p {
+    line-height: 1.6;
+    margin-bottom: 0.75rem;
+  }
+  .lead {
+    font-size: 1.0625rem; /* 17px */
+    color: hsl(var(--muted-foreground));
+  }
+  /* Base rendering improvements */
+  html {
+    font-size: 16px;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+  body {
+    font-feature-settings: "kern" 1;
+    -webkit-font-kerning: normal;
+  }
+  /* Heading refinements for larger screens */
+  @media (min-width: 768px) {
+    h1 { font-size: 2.25rem; } /* 36px */
+    h2 { font-size: 1.5rem; }  /* 24px */
+  }
+  /* Fade-in animation */
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(6px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .animate-fade-in {
+    animation: fadeIn 320ms ease-out both;
   }
 }

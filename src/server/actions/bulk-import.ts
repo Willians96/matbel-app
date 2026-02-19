@@ -23,7 +23,7 @@ export async function processBulkImport(formData: FormData) {
 
         let count = 0;
 
-        for (const row of jsonData as any[]) {
+        for (const row of jsonData as Array<Record<string, unknown>>) {
             // Map Excel columns to Database columns
             // Expected Excel Headers: SERIAL, NOME, CATEGORIA, UNIDADE, PATRIMONIO
             const serialNumber = row['SERIAL'] || row['serial'];
@@ -44,7 +44,7 @@ export async function processBulkImport(formData: FormData) {
                         acquisitionDate: new Date(),
                     });
                     count++;
-                } catch (e: any) {
+                } catch (e) {
                     // Ignora duplicados silenciosamente ou loga
                     console.log(`Skipping duplicate serial: ${serialNumber}`);
                 }

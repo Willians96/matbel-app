@@ -10,11 +10,13 @@ import {
     TableHeader,
     TableRow,
 } from "@/components/ui/table";
-import { Button } from "@/components/ui/button";
+import ActionMenu from "@/components/ui/action-menu";
+import { Button } from "@/components/ui";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { EquipmentFilters } from "@/components/dashboard/equipment-filters";
 import { BulkImport } from "@/components/dashboard/bulk-import";
 import { checkAdmin } from "@/server/auth";
+import EquipmentTableClient from "@/components/equipment/EquipmentTableClient";
 
 export default async function EquipmentPage({
     searchParams,
@@ -30,8 +32,11 @@ export default async function EquipmentPage({
         status: params?.status,
     };
 
-    const result = await getEquipments(filters);
+    const pageNum = Number(params?.page || 1);
+    const pageSize = Number(params?.pageSize || 10);
+    const result = await getEquipments(filters, pageNum, pageSize);
     const equipments = result.success ? result.data : [];
+    const total = result.success && typeof result.total === "number" ? result.total : (equipments ? equipments.length : 0);
 
     return (
         <div className="space-y-6">
@@ -45,6 +50,11 @@ export default async function EquipmentPage({
                 <Link href="/dashboard/equipment/new">
                     <Button className="gap-2 bg-pm-blue text-white hover:bg-pm-blue/90">
                         <Plus className="h-4 w-4" /> Novo Equipamento
+                    </Button>
+                </Link>
+                <Link href="/dashboard/equipment/allocate">
+                    <Button className="gap-2 bg-indigo-600 text-white hover:bg-indigo-700">
+                        <Package className="h-4 w-4" /> Entregar Material
                     </Button>
                 </Link>
             </div>
@@ -68,50 +78,7 @@ export default async function EquipmentPage({
                     </div>
 
                     <div className="rounded-md border border-slate-100">
-                        <Table>
-                            <TableHeader className="bg-slate-50">
-                                <TableRow>
-                                    <TableHead>Serial</TableHead>
-                                    <TableHead>Patrimônio</TableHead>
-                                    <TableHead>Nome</TableHead>
-                                    <TableHead>Categoria</TableHead>
-                                    <TableHead>Unidade</TableHead>
-                                    <TableHead>Status</TableHead>
-                                </TableRow>
-                            </TableHeader>
-                            <TableBody>
-                                {equipments?.length === 0 ? (
-                                    <TableRow>
-                                        <TableCell colSpan={6} className="h-32 text-center text-muted-foreground">
-                                            Nenhum equipamento encontrado com os filtros atuais.
-                                        </TableCell>
-                                    </TableRow>
-                                ) : (
-                                    equipments?.map((item) => (
-                                        <TableRow key={item.id} className="hover:bg-slate-50/50">
-                                            <TableCell className="font-mono font-medium text-slate-700">{item.serialNumber}</TableCell>
-                                            <TableCell className="text-slate-600">{item.patrimony || "-"}</TableCell>
-                                            <TableCell className="font-medium text-slate-900">{item.name}</TableCell>
-                                            <TableCell>{item.category}</TableCell>
-                                            <TableCell>{item.unit}</TableCell>
-                                            <TableCell>
-                                                <span className={`px-2.5 py-0.5 rounded-full text-xs font-semibold border
-                                                    ${item.status === 'disponivel' ? 'bg-green-50 text-green-700 border-green-200' :
-                                                        item.status === 'em_uso' ? 'bg-yellow-50 text-yellow-700 border-yellow-200' :
-                                                            item.status === 'manutencao' ? 'bg-red-50 text-red-700 border-red-200' :
-                                                                'bg-gray-100 text-gray-700 border-gray-200'
-                                                    }
-                                                `}>
-                                                    {item.status === 'disponivel' ? 'Disponível' :
-                                                        item.status === 'em_uso' ? 'Em Uso' :
-                                                            item.status === 'manutencao' ? 'Manutenção' : 'Baixado'}
-                                                </span>
-                                            </TableCell>
-                                        </TableRow>
-                                    ))
-                                )}
-                            </TableBody>
-                        </Table>
+                        <EquipmentTableClient items={equipments} initialPage={pageNum} pageSize={pageSize} />
                     </div>
                 </CardContent>
             </Card>

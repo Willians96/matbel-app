@@ -4,7 +4,7 @@ import { getAllUnits } from "@/server/queries/units";
 import { Card, CardContent } from "@/components/ui/card";
 import { ArrowLeft } from "lucide-react";
 import Link from "next/link";
-import { Button } from "@/components/ui/button";
+import { Button } from "@/components/ui";
 
 export default async function NewEquipmentPage() {
     const units = await getAllUnits();
