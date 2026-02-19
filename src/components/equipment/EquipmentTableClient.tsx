@@ -99,22 +99,22 @@ export default function EquipmentTableClient({ items = [], initialPage = 1, page
                           : "bg-gray-100 text-gray-700 border-gray-200"
                       }`}
                     >
-                      {item.status === \"disponivel\"
-                        ? \"Disponível\"
-                        : item.status === \"em_uso\"
-                        ? \"Em Uso\"
-                        : item.status === \"manutencao\"
-                        ? \"Manutenção\"
-                        : \"Baixado\"}
+                      {item.status === "disponivel"
+                        ? "Disponível"
+                        : item.status === "em_uso"
+                        ? "Em Uso"
+                        : item.status === "manutencao"
+                        ? "Manutenção"
+                        : "Baixado"}
                     </span>
                   </TableCell>
-                  <TableCell className=\"text-right\">
+                  <TableCell className="text-right">
                     <ActionMenu
                       onView={() => (window.location.href = `/dashboard/equipment/${item.id}`)}
                       onEdit={() => (window.location.href = `/dashboard/equipment/${item.id}/edit`)}
                       onDelete={async () => {
                         try {
-                          const res = await fetch(`/api/equipment/${item.id}`, { method: \"DELETE\" });
+                          const res = await fetch(`/api/equipment/${item.id}`, { method: "DELETE" });
                           if (!res.ok) throw new Error("delete failed");
                           window.location.reload();
                         } catch (e) {
@@ -128,21 +128,21 @@ export default function EquipmentTableClient({ items = [], initialPage = 1, page
         </TableBody>
       </Table>
       </div>
-      <div className=\"mt-4 flex items-center justify-end gap-3\">
+      <div className="mt-4 flex items-center justify-end gap-3">
         <button
           onClick={() => setPage((p) => Math.max(1, p - 1))}
           disabled={page === 1}
-          className=\"px-3 py-1 rounded-md border bg-white disabled:opacity-50\"
+          className="px-3 py-1 rounded-md border bg-white disabled:opacity-50"
         >
           Anterior
         </button>
-        <div className=\"text-sm text-muted-foreground\">
+        <div className="text-sm text-muted-foreground">
           Página {page} de {Math.max(1, Math.ceil(total / pageSize))}
         </div>
         <button
           onClick={() => setPage((p) => Math.min(Math.ceil(total / pageSize), p + 1))}
           disabled={page >= Math.ceil(total / pageSize)}
-          className=\"px-3 py-1 rounded-md border bg-white disabled:opacity-50\"
+          className="px-3 py-1 rounded-md border bg-white disabled:opacity-50"
         >
           Próxima
         </button>
