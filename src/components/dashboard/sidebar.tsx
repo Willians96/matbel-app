@@ -11,7 +11,8 @@ import {
     Settings,
     Shield,
     LogOut,
-    FileText
+    FileText,
+    History
 } from "lucide-react";
 
 export const sidebarItems = [
@@ -36,6 +37,11 @@ export const sidebarItems = [
         href: "/dashboard/units",
         icon: Shield,
         role: "admin", // Future proofing
+    {
+        title: "Histórico",
+        href: "/dashboard/admin/history",
+        icon: History,
+        role: "admin",
     },
     {
         title: "Configurações",
