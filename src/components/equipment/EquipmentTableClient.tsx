@@ -22,6 +22,7 @@ export default function EquipmentTableClient({ items = [], initialPage = 1, page
 
   return (
     <>
+      <div className="animate-fade-in">
       <Table>
         <TableHeader className="bg-slate-50">
           <TableRow>
@@ -83,6 +84,7 @@ export default function EquipmentTableClient({ items = [], initialPage = 1, page
           ))}
         </TableBody>
       </Table>
+      </div>
       <div className="mt-4 flex items-center justify-end gap-3">
         <button
           onClick={() => setPage((p) => Math.max(1, p - 1))}
