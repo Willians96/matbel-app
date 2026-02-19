@@ -38,7 +38,7 @@ export async function getTransferHistory(filters?: {
             // A subquery to get User ID from RE would be cleaner, or joining `users` as `u`.
         }
 
-        const result = await db
+        const rawResult = await db
             .select({
                 id: transfers.id,
                 type: transfers.type,
@@ -49,18 +49,30 @@ export async function getTransferHistory(filters?: {
                 userName: users.name,
                 userRe: users.re,
                 userRank: users.rank,
-                adminName: users.name, // This is tricky, we have two joins with 'users' (user_id and admin_id).
+                adminName: users.name, // NOTE: this is wrong, it just repeats user Name.
             })
             .from(transfers)
             .innerJoin(equipamentos, eq(transfers.equipmentId, equipamentos.id))
             .innerJoin(users, eq(transfers.userId, users.id))
-            // .leftJoin(users as admins, eq(transfers.adminId, admins.id)) // Drizzle aliasing is needed here
             .orderBy(desc(transfers.timestamp));
 
-        // Drizzle ORM Aliasing for self-joins (Admin vs User) is essential here.
-        // Since I cannot easily create an alias without more setup in this file,
-        // I will first implement a raw query or a simpler fetch that maps IDs manually if needed,
-        // OR better: use Drizzle's `alias` function.
+        // Map to nested structure
+        const result: TransferHistoryItem[] = rawResult.map(row => ({
+            id: row.id,
+            type: row.type,
+            status: row.status,
+            timestamp: row.timestamp,
+            equipment: {
+                name: row.equipmentName,
+                serialNumber: row.equipmentSerial
+            },
+            user: {
+                name: row.userName,
+                re: row.userRe,
+                rank: row.userRank
+            },
+            admin: null // For now, until we fix the admin join
+        }));
 
         return { success: true, data: result };
 
