@@ -2,7 +2,7 @@
 
 import { db } from "@/db";
 import { equipamentos } from "@/db/schema";
-import { desc, eq, like, and } from "drizzle-orm";
+import { desc, eq, like, and, count } from "drizzle-orm";
 
 export type EquipmentFilters = {
     serialNumber?: string;
@@ -11,7 +11,7 @@ export type EquipmentFilters = {
     status?: string;
 };
 
-export async function getEquipments(filters?: EquipmentFilters) {
+export async function getEquipments(filters?: EquipmentFilters, page = 1, pageSize = 10) {
     try {
         const conditions = [];
 
@@ -27,14 +27,22 @@ export async function getEquipments(filters?: EquipmentFilters) {
         if (filters?.status) {
             conditions.push(eq(equipamentos.status, filters.status as "disponivel" | "em_uso" | "manutencao" | "baixado"));
         }
+        // total count with same filters
+        let totalRes;
+        if (conditions.length > 0) {
+            totalRes = await db.select({ total: count() }).from(equipamentos).where(and(...conditions));
+        } else {
+            totalRes = await db.select({ total: count() }).from(equipamentos);
+        }
+        const total = totalRes[0]?.total ?? 0;
 
-        const data = await db
-            .select()
-            .from(equipamentos)
-            .where(and(...conditions))
-            .orderBy(desc(equipamentos.createdAt));
-
-        const total = data.length;
+        // pagination
+        const offset = Math.max(0, (page - 1) * pageSize);
+        let q = db.select().from(equipamentos).orderBy(desc(equipamentos.createdAt)).limit(pageSize).offset(offset);
+        if (conditions.length > 0) {
+            q = q.where(and(...conditions));
+        }
+        const data = await q;
 
         return { success: true, data, total };
     } catch (error) {

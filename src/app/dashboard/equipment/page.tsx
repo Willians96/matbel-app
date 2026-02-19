@@ -34,7 +34,7 @@ export default async function EquipmentPage({
 
     const pageNum = Number(params?.page || 1);
     const pageSize = Number(params?.pageSize || 10);
-    const result = await getEquipments(filters);
+    const result = await getEquipments(filters, pageNum, pageSize);
     const equipments = result.success ? result.data : [];
     const total = result.success && typeof result.total === "number" ? result.total : (equipments ? equipments.length : 0);
 
