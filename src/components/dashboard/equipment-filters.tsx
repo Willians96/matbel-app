@@ -139,9 +139,8 @@ export function EquipmentFilters() {
 
             <div className="flex gap-3 justify-end pt-2">
                 <Button
-                    variant="outline"
                     onClick={clearFilters}
-                    className="border-slate-300 text-slate-700 hover:bg-slate-50"
+                    className="bg-red-600 text-white hover:bg-red-700 shadow-sm transition-colors"
                 >
                     <X className="w-4 h-4 mr-2" />
                     Limpar
