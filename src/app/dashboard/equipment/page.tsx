@@ -36,14 +36,14 @@ export default async function EquipmentPage({
 
     return (
         <div className="space-y-6">
-            <div className="flex items-center justify-between">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
                 <div>
-                    <h2 className="text-3xl font-bold tracking-tight text-slate-900">Equipamentos</h2>
-                    <p className="text-muted-foreground">
+                    <h2 className="text-2xl md:text-3xl font-bold tracking-tight text-pm-blue">Equipamentos</h2>
+                    <p className="text-muted-foreground text-sm">
                         Gerencie o inventário de material bélico.
                     </p>
                 </div>
-                <div className="flex gap-2">
+                <div className="flex flex-wrap gap-2">
                     <Link href="/dashboard/equipment/new">
                         <Button className="gap-2 bg-pm-blue text-white hover:bg-pm-blue/90 shadow-md">
                             <Plus className="h-4 w-4" /> Novo Equipamento
@@ -76,15 +76,15 @@ export default async function EquipmentPage({
                         </div>
                     </div>
 
-                    <div className="rounded-md border border-slate-200 overflow-hidden shadow-sm">
+                    <div className="rounded-md border border-slate-200 overflow-x-auto shadow-sm">
                         <Table>
                             <TableHeader className="bg-slate-50">
                                 <TableRow>
                                     <TableHead className="font-semibold text-slate-700">Serial</TableHead>
-                                    <TableHead className="font-semibold text-slate-700">Patrimônio</TableHead>
+                                    <TableHead className="font-semibold text-slate-700 hidden sm:table-cell">Patrimônio</TableHead>
                                     <TableHead className="font-semibold text-slate-700">Nome</TableHead>
-                                    <TableHead className="font-semibold text-slate-700">Unidade</TableHead>
-                                    <TableHead className="font-semibold text-slate-700">Responsável</TableHead>
+                                    <TableHead className="font-semibold text-slate-700 hidden md:table-cell">Unidade</TableHead>
+                                    <TableHead className="font-semibold text-slate-700 hidden lg:table-cell">Responsável</TableHead>
                                     <TableHead className="font-semibold text-slate-700">Status</TableHead>
                                 </TableRow>
                             </TableHeader>
@@ -102,10 +102,10 @@ export default async function EquipmentPage({
                                     equipments?.map((item) => (
                                         <TableRow key={item.id} className="hover:bg-slate-50/50 transition-colors">
                                             <TableCell className="font-mono font-medium text-slate-700">{item.serialNumber}</TableCell>
-                                            <TableCell className="text-slate-600 text-sm">{item.patrimony || "-"}</TableCell>
+                                            <TableCell className="text-slate-600 text-sm hidden sm:table-cell">{item.patrimony || "-"}</TableCell>
                                             <TableCell className="font-medium text-slate-900">{item.name}</TableCell>
-                                            <TableCell className="text-slate-600 text-sm">{item.unit}</TableCell>
-                                            <TableCell>
+                                            <TableCell className="text-slate-600 text-sm hidden md:table-cell">{item.unit}</TableCell>
+                                            <TableCell className="hidden lg:table-cell">
                                                 {item.status === 'em_uso' && item.user ? (
                                                     <div className="flex flex-col">
                                                         <span className="text-sm font-medium text-slate-900">{item.user.name}</span>

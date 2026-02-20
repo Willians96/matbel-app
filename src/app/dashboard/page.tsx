@@ -30,21 +30,21 @@ export default async function DashboardPage() {
 
     return (
         <div className="space-y-6">
-            <div className="flex items-center justify-between">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
                 <div>
-                    <h2 className="text-3xl font-bold tracking-tight text-slate-900">Dashboard Admin</h2>
-                    <p className="text-muted-foreground">Visão geral do arsenal da unidade.</p>
+                    <h2 className="text-2xl md:text-3xl font-bold tracking-tight text-pm-blue">Dashboard Admin</h2>
+                    <p className="text-muted-foreground text-sm">Visão geral do arsenal da unidade.</p>
                 </div>
-                <div className="flex gap-2">
+                <div className="flex flex-wrap gap-2">
                     <Link
                         href="/dashboard/checkout"
-                        className="hidden sm:inline-flex items-center justify-center rounded-lg text-sm font-bold text-white ring-offset-background transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-green-600 hover:bg-green-700 shadow-md hover:shadow-lg hover:-translate-y-0.5 active:translate-y-0 active:scale-95 h-10 px-6 py-2 mr-2"
+                        className="inline-flex items-center justify-center rounded-lg text-sm font-bold text-white ring-offset-background transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-green-600 hover:bg-green-700 shadow-md hover:shadow-lg hover:-translate-y-0.5 active:translate-y-0 active:scale-95 h-10 px-4 py-2"
                     >
                         Carga Pessoal Rápida
                     </Link>
                     <Link
                         href="/dashboard/equipment/new"
-                        className="inline-flex items-center justify-center rounded-lg text-sm font-bold text-white transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-pm-blue/50 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-gradient-to-r from-pm-blue to-blue-900 shadow-md hover:shadow-xl hover:shadow-pm-blue/30 hover:-translate-y-0.5 active:translate-y-0 active:scale-95 h-10 px-6 py-2"
+                        className="inline-flex items-center justify-center rounded-lg text-sm font-bold text-white transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-pm-blue/50 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-gradient-to-r from-pm-blue to-blue-900 shadow-md hover:shadow-xl hover:shadow-pm-blue/30 hover:-translate-y-0.5 active:translate-y-0 active:scale-95 h-10 px-4 py-2"
                     >
                         + Novo Equipamento
                     </Link>
