@@ -24,7 +24,8 @@ export function AddUnitDialog() {
     async function handleSubmit(formData: FormData) {
         setLoading(true);
         try {
-            const result = await createUnit(formData);
+            const name = formData.get("name") as string;
+            const result = await createUnit(name);
             if (result.success) {
                 toast.success(result.message);
                 setOpen(false);
