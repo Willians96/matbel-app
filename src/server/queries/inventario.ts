@@ -21,6 +21,10 @@ export async function searchArmas(query: string) {
         .limit(10);
 }
 
+export async function getAllArmas() {
+    return db.select().from(armas);
+}
+
 export async function getArmasDisponiveis() {
     return db.select().from(armas).where(eq(armas.status, "disponivel"));
 }
@@ -45,6 +49,10 @@ export async function searchColetes(query: string) {
             )
         )
         .limit(10);
+}
+
+export async function getAllColetes() {
+    return db.select().from(coletes);
 }
 
 export async function getColetesDisponiveis() {
@@ -72,6 +80,11 @@ export async function searchAlgemas(query: string) {
             )
         )
         .limit(10);
+}
+
+export async function getAllAlgemas() {
+    // Returns all algemas regardless of status
+    return db.select().from(algemas);
 }
 
 export async function getAlgemasDisponiveis() {

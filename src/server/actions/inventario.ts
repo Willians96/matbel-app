@@ -168,3 +168,102 @@ export async function createMunicao(data: {
         return { success: false, message: "Erro ao cadastrar munição." };
     }
 }
+
+// ─── UPDATE ──────────────────────────────────────────────────────────────────
+
+export async function updateArma(id: number, data: {
+    name?: string; caliber?: string; finish?: string;
+    manufacturer?: string; observations?: string; status?: string;
+}) {
+    await checkAdmin();
+    await db.update(armas).set({
+        name: data.name?.trim(),
+        caliber: data.caliber?.trim() || null,
+        finish: data.finish?.trim() || null,
+        manufacturer: data.manufacturer?.trim() || null,
+        observations: data.observations?.trim() || null,
+        status: data.status as "disponivel" | "em_uso" | "manutencao" | "baixado" | undefined,
+    }).where(eq(armas.id, id));
+    revalidatePath("/dashboard/admin/inventario");
+    return { success: true };
+}
+
+export async function updateColete(id: number, data: {
+    name?: string; model?: string; size?: string;
+    expiresAt?: string; observations?: string; status?: string;
+}) {
+    await checkAdmin();
+    await db.update(coletes).set({
+        name: data.name?.trim(),
+        model: data.model?.trim() || null,
+        size: data.size?.trim() || null,
+        expiresAt: data.expiresAt ? new Date(data.expiresAt) : null,
+        observations: data.observations?.trim() || null,
+        status: data.status as "disponivel" | "em_uso" | "manutencao" | "baixado" | undefined,
+    }).where(eq(coletes.id, id));
+    revalidatePath("/dashboard/admin/inventario");
+    return { success: true };
+}
+
+export async function updateAlgema(id: number, data: {
+    name?: string; brand?: string; model?: string; observations?: string; status?: string;
+}) {
+    await checkAdmin();
+    await db.update(algemas).set({
+        name: data.name?.trim(),
+        brand: data.brand?.trim() || null,
+        model: data.model?.trim() || null,
+        observations: data.observations?.trim() || null,
+        status: data.status as "disponivel" | "em_uso" | "manutencao" | "baixado" | undefined,
+    }).where(eq(algemas.id, id));
+    revalidatePath("/dashboard/admin/inventario");
+    return { success: true };
+}
+
+export async function updateMunicao(id: number, data: {
+    description?: string; type?: string; observations?: string; expiresAt?: string;
+}) {
+    await checkAdmin();
+    await db.update(municoes).set({
+        description: data.description?.trim(),
+        type: data.type?.trim(),
+        observations: data.observations?.trim() || null,
+        expiresAt: data.expiresAt ? new Date(data.expiresAt) : null,
+    }).where(eq(municoes.id, id));
+    revalidatePath("/dashboard/admin/inventario");
+    return { success: true };
+}
+
+// ─── DELETE ──────────────────────────────────────────────────────────────────
+
+export async function deleteArma(id: number) {
+    await checkAdmin();
+    const [item] = await db.select({ status: armas.status }).from(armas).where(eq(armas.id, id));
+    if (item?.status === "em_uso") return { success: false, message: "Não é possível excluir uma arma em uso." };
+    await db.delete(armas).where(eq(armas.id, id));
+    revalidatePath("/dashboard/admin/inventario");
+    return { success: true };
+}
+
+export async function deleteColete(id: number) {
+    await checkAdmin();
+    const [item] = await db.select({ status: coletes.status }).from(coletes).where(eq(coletes.id, id));
+    if (item?.status === "em_uso") return { success: false, message: "Não é possível excluir um colete em uso." };
+    await db.delete(coletes).where(eq(coletes.id, id));
+    revalidatePath("/dashboard/admin/inventario");
+    return { success: true };
+}
+
+export async function deleteAlgema(id: number) {
+    await checkAdmin();
+    await db.delete(algemas).where(eq(algemas.id, id));
+    revalidatePath("/dashboard/admin/inventario");
+    return { success: true };
+}
+
+export async function deleteMunicao(id: number) {
+    await checkAdmin();
+    await db.delete(municoes).where(eq(municoes.id, id));
+    revalidatePath("/dashboard/admin/inventario");
+    return { success: true };
+}

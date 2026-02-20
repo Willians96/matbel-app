@@ -14,23 +14,28 @@ import { AddColeteDialog } from "./add-colete-dialog";
 import { AddAlgemaDialog } from "./add-algema-dialog";
 import { AddMunicaoDialog } from "./add-municao-dialog";
 import { InventarioImportDialog } from "./inventario-import-dialog";
+import { ArmaRowActions, ColeteRowActions, AlgemaRowActions, MunicaoRowActions } from "./inventario-row-actions";
 
 type Arma = {
     id: number; patrimony: string; serialNumber: string; name: string;
-    caliber: string | null; manufacturer: string | null; status: string;
+    caliber: string | null; manufacturer: string | null; finish: string | null;
+    observations: string | null; status: string;
 };
 type Colete = {
     id: number; patrimony: string; serialNumber: string; name: string;
     model: string | null; size: string | null; status: string; expiresAt: Date | null;
+    observations: string | null;
 };
 type Algema = {
     id: number; patrimony: string; serialNumber: string; name: string;
     brand: string | null; model: string | null; hasRegistry: boolean;
     availableQty: number; totalQty: number; status: string;
+    observations: string | null;
 };
 type Municao = {
     id: number; batch: string; description: string; type: string;
     availableQty: number; totalQty: number; expiresAt: Date | null;
+    observations: string | null;
 };
 
 interface InventarioClientProps {
@@ -109,6 +114,7 @@ export function InventarioClient({ armas, coletes, algemas, municoes }: Inventar
                                         <TableHead className="hidden md:table-cell">Calibre</TableHead>
                                         <TableHead className="hidden lg:table-cell">Fabricante</TableHead>
                                         <TableHead>Status</TableHead>
+                                        <TableHead className="text-right">Ações</TableHead>
                                     </TableRow>
                                 </TableHeader>
                                 <TableBody>
@@ -120,6 +126,9 @@ export function InventarioClient({ armas, coletes, algemas, municoes }: Inventar
                                             <TableCell className="hidden md:table-cell text-slate-600">{a.caliber ?? "—"}</TableCell>
                                             <TableCell className="hidden lg:table-cell text-slate-600">{a.manufacturer ?? "—"}</TableCell>
                                             <TableCell><StatusBadge status={a.status} /></TableCell>
+                                            <TableCell className="text-right">
+                                                <ArmaRowActions item={a} />
+                                            </TableCell>
                                         </TableRow>
                                     ))}
                                 </TableBody>
@@ -162,6 +171,7 @@ export function InventarioClient({ armas, coletes, algemas, municoes }: Inventar
                                         <TableHead className="hidden md:table-cell">Modelo</TableHead>
                                         <TableHead className="hidden lg:table-cell">Validade</TableHead>
                                         <TableHead>Status</TableHead>
+                                        <TableHead className="text-right">Ações</TableHead>
                                     </TableRow>
                                 </TableHeader>
                                 <TableBody>
@@ -178,6 +188,9 @@ export function InventarioClient({ armas, coletes, algemas, municoes }: Inventar
                                                 {c.expiresAt ? new Date(c.expiresAt).toLocaleDateString("pt-BR") : "—"}
                                             </TableCell>
                                             <TableCell><StatusBadge status={c.status} /></TableCell>
+                                            <TableCell className="text-right">
+                                                <ColeteRowActions item={c} />
+                                            </TableCell>
                                         </TableRow>
                                     ))}
                                 </TableBody>
@@ -219,6 +232,7 @@ export function InventarioClient({ armas, coletes, algemas, municoes }: Inventar
                                         <TableHead className="hidden sm:table-cell">Marca</TableHead>
                                         <TableHead>Tipo</TableHead>
                                         <TableHead>Qtd Disp.</TableHead>
+                                        <TableHead className="text-right">Ações</TableHead>
                                     </TableRow>
                                 </TableHeader>
                                 <TableBody>
@@ -239,6 +253,9 @@ export function InventarioClient({ armas, coletes, algemas, municoes }: Inventar
                                             </TableCell>
                                             <TableCell className="font-semibold text-pm-blue">
                                                 {a.availableQty}/{a.totalQty}
+                                            </TableCell>
+                                            <TableCell className="text-right">
+                                                <AlgemaRowActions item={a} />
                                             </TableCell>
                                         </TableRow>
                                     ))}
@@ -281,6 +298,7 @@ export function InventarioClient({ armas, coletes, algemas, municoes }: Inventar
                                         <TableHead className="hidden md:table-cell">Validade</TableHead>
                                         <TableHead>Disponível</TableHead>
                                         <TableHead className="hidden lg:table-cell">Total</TableHead>
+                                        <TableHead className="text-right">Ações</TableHead>
                                     </TableRow>
                                 </TableHeader>
                                 <TableBody>
@@ -308,6 +326,9 @@ export function InventarioClient({ armas, coletes, algemas, municoes }: Inventar
                                                     </div>
                                                 </TableCell>
                                                 <TableCell className="hidden lg:table-cell text-slate-500">{m.totalQty}</TableCell>
+                                                <TableCell className="text-right">
+                                                    <MunicaoRowActions item={m} />
+                                                </TableCell>
                                             </TableRow>
                                         );
                                     })}

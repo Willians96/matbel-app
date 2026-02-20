@@ -1,8 +1,8 @@
 
 import { checkAdmin } from "@/server/auth";
-import { getArmasDisponiveis } from "@/server/queries/inventario";
-import { getColetesDisponiveis } from "@/server/queries/inventario";
-import { getAlgemasDisponiveis } from "@/server/queries/inventario";
+import { getAllArmas } from "@/server/queries/inventario";
+import { getAllColetes } from "@/server/queries/inventario";
+import { getAllAlgemas } from "@/server/queries/inventario";
 import { getMunicoesBatches } from "@/server/queries/inventario";
 import { InventarioClient } from "@/components/dashboard/inventario/inventario-client";
 import { Package, ShieldCheck } from "lucide-react";
@@ -11,9 +11,9 @@ export default async function InventarioPage() {
     await checkAdmin();
 
     const [armas, coletes, algemas, municoes] = await Promise.all([
-        getArmasDisponiveis(),
-        getColetesDisponiveis(),
-        getAlgemasDisponiveis(),
+        getAllArmas(),
+        getAllColetes(),
+        getAllAlgemas(),
         getMunicoesBatches(),
     ]);
 
