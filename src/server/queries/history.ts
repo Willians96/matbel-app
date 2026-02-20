@@ -1,7 +1,7 @@
 
 import { db } from "@/db";
 import { transfers, equipamentos, users } from "@/db/schema";
-import { desc, eq } from "drizzle-orm";
+import { desc, eq, and, gte, lte } from "drizzle-orm";
 
 export type TransferHistoryItem = {
     id: string;
@@ -25,17 +25,34 @@ export type TransferHistoryItem = {
 export async function getTransferHistory(filters?: {
     userRe?: string;
     serialNumber?: string;
+    type?: "allocation" | "return" | "all";
+    startDate?: Date;
+    endDate?: Date;
 }) {
     try {
-
+        const conditions = [];
 
         if (filters?.userRe) {
-            // We need to join users to filter by RE, checking the user_id relation
-            // However, Drizzle's query builder with `where` operates on the selected fields.
-            // Let's rely on the join results or subqueries if needed.
-            // For simplicity in this joined view, we might filter post-fetch or ensure relation logic.
-            // Actually, let's filter by the user's ID if we had it, but here we have RE.
-            // A subquery to get User ID from RE would be cleaner, or joining `users` as `u`.
+            conditions.push(eq(users.re, filters.userRe));
+        }
+
+        if (filters?.serialNumber) {
+            conditions.push(eq(equipamentos.serialNumber, filters.serialNumber));
+        }
+
+        if (filters?.type && filters.type !== "all") {
+            conditions.push(eq(transfers.type, filters.type));
+        }
+
+        if (filters?.startDate) {
+            conditions.push(gte(transfers.timestamp, filters.startDate));
+        }
+
+        if (filters?.endDate) {
+            // Set end date to end of day
+            const end = new Date(filters.endDate);
+            end.setHours(23, 59, 59, 999);
+            conditions.push(lte(transfers.timestamp, end));
         }
 
         const rawResult = await db
@@ -49,17 +66,18 @@ export async function getTransferHistory(filters?: {
                 userName: users.name,
                 userRe: users.re,
                 userRank: users.rank,
-                adminName: users.name, // NOTE: this is wrong, it just repeats user Name.
+                userUnit: users.unit,
             })
             .from(transfers)
             .innerJoin(equipamentos, eq(transfers.equipmentId, equipamentos.id))
             .innerJoin(users, eq(transfers.userId, users.id))
+            .where(and(...conditions))
             .orderBy(desc(transfers.timestamp));
 
         // Map to nested structure
         const result: TransferHistoryItem[] = rawResult.map(row => ({
             id: row.id,
-            type: row.type,
+            type: row.type as "allocation" | "return",
             status: row.status,
             timestamp: row.timestamp,
             equipment: {
@@ -69,9 +87,9 @@ export async function getTransferHistory(filters?: {
             user: {
                 name: row.userName,
                 re: row.userRe,
-                rank: row.userRank
+                rank: row.userRank,
             },
-            admin: null // For now, until we fix the admin join
+            admin: null // Admin info would require another join on admin_id if it exists in transfers logic
         }));
 
         return { success: true, data: result };
