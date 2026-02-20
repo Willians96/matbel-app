@@ -8,11 +8,12 @@ import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/com
 import {
     Table, TableBody, TableCell, TableHead, TableHeader, TableRow
 } from "@/components/ui/table";
-import { Crosshair, Shield, Link2, Zap, Plus } from "lucide-react";
+import { Crosshair, Shield, Link2, Zap } from "lucide-react";
 import { AddArmaDialog } from "./add-arma-dialog";
 import { AddColeteDialog } from "./add-colete-dialog";
 import { AddAlgemaDialog } from "./add-algema-dialog";
 import { AddMunicaoDialog } from "./add-municao-dialog";
+import { InventarioImportDialog } from "./inventario-import-dialog";
 
 type Arma = {
     id: number; patrimony: string; serialNumber: string; name: string;
@@ -87,7 +88,10 @@ export function InventarioClient({ armas, coletes, algemas, municoes }: Inventar
                             </CardTitle>
                             <CardDescription>Armamento da reserva apto para carga.</CardDescription>
                         </div>
-                        <AddArmaDialog />
+                        <div className="flex items-center gap-2">
+                            <InventarioImportDialog type="armas" />
+                            <AddArmaDialog />
+                        </div>
                     </CardHeader>
                     <CardContent className="pt-4 overflow-x-auto">
                         {armas.length === 0 ? (
@@ -136,7 +140,10 @@ export function InventarioClient({ armas, coletes, algemas, municoes }: Inventar
                             </CardTitle>
                             <CardDescription>Coletes balísticos da reserva.</CardDescription>
                         </div>
-                        <AddColeteDialog />
+                        <div className="flex items-center gap-2">
+                            <InventarioImportDialog type="coletes" />
+                            <AddColeteDialog />
+                        </div>
                     </CardHeader>
                     <CardContent className="pt-4 overflow-x-auto">
                         {coletes.length === 0 ? (
@@ -191,7 +198,10 @@ export function InventarioClient({ armas, coletes, algemas, municoes }: Inventar
                             </CardTitle>
                             <CardDescription>Algemas com e sem registro de patrimônio/série.</CardDescription>
                         </div>
-                        <AddAlgemaDialog />
+                        <div className="flex items-center gap-2">
+                            <InventarioImportDialog type="algemas" />
+                            <AddAlgemaDialog />
+                        </div>
                     </CardHeader>
                     <CardContent className="pt-4 overflow-x-auto">
                         {algemas.length === 0 ? (
@@ -250,7 +260,10 @@ export function InventarioClient({ armas, coletes, algemas, municoes }: Inventar
                             </CardTitle>
                             <CardDescription>Controle rigoroso por lote. Estoque subtraído a cada carga.</CardDescription>
                         </div>
-                        <AddMunicaoDialog />
+                        <div className="flex items-center gap-2">
+                            <InventarioImportDialog type="municoes" />
+                            <AddMunicaoDialog />
+                        </div>
                     </CardHeader>
                     <CardContent className="pt-4 overflow-x-auto">
                         {municoes.length === 0 ? (

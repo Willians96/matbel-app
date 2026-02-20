@@ -9,7 +9,6 @@ import {
     LayoutDashboard,
     Package,
     Settings,
-    Shield,
     LogOut,
     FileText,
     History,
@@ -33,12 +32,6 @@ export const sidebarItems = [
         href: "/dashboard/admin/declarations",
         icon: FileText,
         role: "admin",
-    },
-    {
-        title: "Unidades",
-        href: "/dashboard/units",
-        icon: Shield,
-        role: "admin", // Future proofing
     },
     {
         title: "Inventário",
