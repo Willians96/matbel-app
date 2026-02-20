@@ -13,6 +13,7 @@ import { format } from "date-fns";
 import { ptBR } from "date-fns/locale";
 import type { TransferHistoryItem } from "@/server/queries/history";
 import { ArrowDownLeft, ArrowUpRight, History } from "lucide-react";
+import { DownloadTermoButton } from "./download-termo-button";
 
 interface HistoryTableClientProps {
     data: TransferHistoryItem[];
@@ -34,22 +35,23 @@ export function HistoryTableClient({ data }: HistoryTableClientProps) {
     }
 
     return (
-        <div className="rounded-xl border border-slate-200 bg-white shadow-sm overflow-hidden">
+        <div className="rounded-xl border border-slate-200 bg-white shadow-sm overflow-x-auto">
             <Table>
                 <TableHeader className="bg-slate-50">
                     <TableRow>
                         <TableHead className="font-semibold text-slate-700">Data/Hora</TableHead>
                         <TableHead className="font-semibold text-slate-700">Tipo</TableHead>
                         <TableHead className="font-semibold text-slate-700">Equipamento</TableHead>
-                        <TableHead className="font-semibold text-slate-700">Policial (RE)</TableHead>
-                        <TableHead className="font-semibold text-slate-700">Status</TableHead>
+                        <TableHead className="font-semibold text-slate-700 hidden md:table-cell">Policial (RE)</TableHead>
+                        <TableHead className="font-semibold text-slate-700 hidden sm:table-cell">Status</TableHead>
+                        <TableHead className="font-semibold text-slate-700 text-right">Ações</TableHead>
                     </TableRow>
                 </TableHeader>
                 <TableBody>
                     {data.map((item) => (
                         <TableRow key={item.id} className="hover:bg-slate-50/50 transition-colors">
-                            <TableCell className="font-medium text-slate-700">
-                                {item.timestamp ? format(item.timestamp, "dd/MM/yyyy HH:mm", { locale: ptBR }) : "-"}
+                            <TableCell className="font-medium text-slate-700 text-sm">
+                                {item.timestamp ? format(item.timestamp, "dd/MM/yy HH:mm", { locale: ptBR }) : "-"}
                             </TableCell>
                             <TableCell>
                                 <div className="flex items-center gap-2">
@@ -72,7 +74,7 @@ export function HistoryTableClient({ data }: HistoryTableClientProps) {
                                     <span className="text-xs text-slate-500 font-mono">S/N: {item.equipment.serialNumber}</span>
                                 </div>
                             </TableCell>
-                            <TableCell>
+                            <TableCell className="hidden md:table-cell">
                                 <div className="flex flex-col">
                                     <span className="font-medium text-slate-800">{item.user.name}</span>
                                     <div className="flex items-center gap-1.5 text-xs text-slate-500">
@@ -82,10 +84,13 @@ export function HistoryTableClient({ data }: HistoryTableClientProps) {
                                     </div>
                                 </div>
                             </TableCell>
-                            <TableCell>
+                            <TableCell className="hidden sm:table-cell">
                                 <Badge variant="outline" className="capitalize bg-slate-50 text-slate-600 border-slate-200 font-normal">
                                     {item.status.replace(/_/g, " ")}
                                 </Badge>
+                            </TableCell>
+                            <TableCell className="text-right">
+                                <DownloadTermoButton item={item} />
                             </TableCell>
                         </TableRow>
                     ))}

@@ -11,11 +11,13 @@ export type TransferHistoryItem = {
     equipment: {
         name: string;
         serialNumber: string;
+        patrimony: string | null;
     };
     user: {
         name: string;
         re: string | null;
         rank: string | null;
+        unit: string | null;
     };
     admin: {
         name: string;
@@ -63,6 +65,7 @@ export async function getTransferHistory(filters?: {
                 timestamp: transfers.timestamp,
                 equipmentName: equipamentos.name,
                 equipmentSerial: equipamentos.serialNumber,
+                equipmentPatrimony: equipamentos.patrimony,
                 userName: users.name,
                 userRe: users.re,
                 userRank: users.rank,
@@ -82,12 +85,14 @@ export async function getTransferHistory(filters?: {
             timestamp: row.timestamp,
             equipment: {
                 name: row.equipmentName,
-                serialNumber: row.equipmentSerial
+                serialNumber: row.equipmentSerial,
+                patrimony: row.equipmentPatrimony,
             },
             user: {
                 name: row.userName,
                 re: row.userRe,
                 rank: row.userRank,
+                unit: row.userUnit,
             },
             admin: null // Admin info would require another join on admin_id if it exists in transfers logic
         }));
