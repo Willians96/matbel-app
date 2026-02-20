@@ -194,7 +194,7 @@ export function EquipmentForm({ units }: EquipmentFormProps) {
                     )}
                 />
 
-                <Button type="submit" disabled={isPending} className="w-full md:w-auto bg-pm-blue hover:bg-pm-blue/90">
+                <Button type="submit" disabled={isPending} className="w-full md:w-auto bg-pm-blue text-white hover:bg-pm-blue/90 shadow-md shadow-blue-900/20">
                     {isPending ? "Salvando..." : "Cadastrar Equipamento"}
                 </Button>
             </form>
