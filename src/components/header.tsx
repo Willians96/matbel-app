@@ -10,24 +10,28 @@ export function Header() {
   const [open, setOpen] = useState(false);
 
   return (
-    <header className="flex h-16 w-full items-center justify-between border-b px-4 md:px-6">
-      <Link className="flex items-center gap-2 font-bold" href="/">
-        <span>Matbel</span>
+    <header className="flex h-16 w-full items-center justify-between border-b border-white/10 px-4 md:px-6 bg-[#003366] text-white shadow-sm">
+      <Link className="flex items-center gap-2 font-bold hover:text-blue-100 transition-colors" href="/">
+        <span>Matbel CPI-7</span>
       </Link>
 
       <nav className="hidden md:flex gap-4 items-center">
         <SignedOut>
           <SignedOut>
-            <Link href="/dashboard" className="text-sm font-medium hover:underline">
+            <Link href="/dashboard" className="text-sm font-medium text-blue-100 hover:text-white hover:underline transition-colors">
               Entrar
             </Link>
           </SignedOut>
         </SignedOut>
         <SignedIn>
-          <Link href="/dashboard" className="text-sm font-medium hover:underline flex items-center">
+          <Link href="/dashboard" className="text-sm font-medium text-blue-100 hover:text-white hover:underline flex items-center transition-colors">
             Dashboard
           </Link>
-          <UserButton />
+          <div className="bg-white/10 p-1 rounded-full">
+            <UserButton appearance={{
+              elements: { userButtonAvatarBox: "w-8 h-8" }
+            }} />
+          </div>
         </SignedIn>
       </nav>
 
@@ -35,10 +39,10 @@ export function Header() {
       <div className="md:hidden">
         <button
           aria-label="Abrir menu"
-          className="p-2 rounded-md hover:bg-slate-100"
+          className="p-2 rounded-md hover:bg-white/10 text-white"
           onClick={() => setOpen((v) => !v)}
         >
-          <Menu className="w-5 h-5" />
+          <Menu className="w-6 h-6" />
         </button>
       </div>
 
