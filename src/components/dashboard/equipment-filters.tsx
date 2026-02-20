@@ -24,6 +24,7 @@ export function EquipmentFilters() {
     const [patrimony, setPatrimony] = useState(searchParams.get("patrimony") || "");
     const [unit, setUnit] = useState(searchParams.get("unit") || "");
     const [status, setStatus] = useState(searchParams.get("status") || "");
+    const [userRe, setUserRe] = useState(searchParams.get("userRe") || "");
 
     // Update state when URL params change (e.g. clear filters)
     useEffect(() => {
@@ -31,6 +32,7 @@ export function EquipmentFilters() {
         const pt = searchParams.get("patrimony") || "";
         const u = searchParams.get("unit") || "";
         const st = searchParams.get("status") || "";
+        const re = searchParams.get("userRe") || "";
 
         // Use functional updates to avoid unnecessary re-renders
         /* eslint-disable-next-line react-hooks/set-state-in-effect */
@@ -41,6 +43,8 @@ export function EquipmentFilters() {
         setUnit((prev) => (prev === u ? prev : u));
         /* eslint-disable-next-line react-hooks/set-state-in-effect */
         setStatus((prev) => (prev === st ? prev : st));
+        /* eslint-disable-next-line react-hooks/set-state-in-effect */
+        setUserRe((prev) => (prev === re ? prev : re));
     }, [searchParams]);
 
     const applyFilters = () => {
@@ -49,6 +53,7 @@ export function EquipmentFilters() {
         if (patrimony) params.set("patrimony", patrimony);
         if (unit && unit !== "all") params.set("unit", unit);
         if (status && status !== "all") params.set("status", status);
+        if (userRe) params.set("userRe", userRe);
 
         router.push(`?${params.toString()}`);
     };
@@ -58,6 +63,7 @@ export function EquipmentFilters() {
         setPatrimony("");
         setUnit("");
         setStatus("");
+        setUserRe("");
         router.push("?");
     };
 
@@ -75,6 +81,16 @@ export function EquipmentFilters() {
                         placeholder="Digite o serial..."
                         value={serialNumber}
                         onChange={(e) => setSerialNumber(e.target.value)}
+                        className="bg-white border-slate-300 focus:border-pm-blue focus:ring-pm-blue/20"
+                    />
+                </div>
+
+                <div className="space-y-1.5">
+                    <label className="text-sm font-medium text-slate-700">RE do Policial</label>
+                    <Input
+                        placeholder="Digite o RE..."
+                        value={userRe}
+                        onChange={(e) => setUserRe(e.target.value)}
                         className="bg-white border-slate-300 focus:border-pm-blue focus:ring-pm-blue/20"
                     />
                 </div>
@@ -138,6 +154,6 @@ export function EquipmentFilters() {
                     Aplicar Filtros
                 </Button>
             </div>
-        </div>
+        </div >
     );
 }
