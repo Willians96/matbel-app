@@ -1,28 +1,48 @@
 
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
-import { Settings, ShieldAlert, Wrench } from "lucide-react";
+import { Settings, ShieldAlert, Wrench, UserPen } from "lucide-react";
 
 import { checkAdmin } from "@/server/auth";
-
+import { getAllUnits } from "@/server/queries/units";
 import { AdminManager } from "@/components/dashboard/settings/admin-manager";
+import { UserEditor } from "@/components/dashboard/settings/user-editor";
 
 export default async function SettingsPage() {
     await checkAdmin();
+    const units = await getAllUnits();
+    const unitNames = units.map((u) => u.name);
+
     return (
-        <div className="space-y-6">
+        <div className="space-y-6 animate-in fade-in slide-in-from-bottom-4 duration-500">
             <div className="flex items-center gap-3">
-                <div className="p-3 bg-pm-blue text-white rounded-full">
+                <div className="p-3 bg-pm-blue text-white rounded-full shadow-lg shadow-blue-900/20">
                     <Settings className="w-6 h-6" />
                 </div>
                 <div>
                     <h2 className="text-3xl font-bold tracking-tight text-pm-blue">Configurações do Sistema</h2>
-                    <p className="text-muted-foreground">
+                    <p className="text-muted-foreground text-sm font-medium">
                         Ajustes globais e preferências da aplicação.
                     </p>
                 </div>
             </div>
 
             <div className="space-y-6">
+                {/* User Editor Card */}
+                <Card className="border-slate-200 shadow-sm">
+                    <CardHeader className="border-b border-slate-100 pb-4">
+                        <CardTitle className="flex items-center gap-2 text-slate-800">
+                            <UserPen className="w-5 h-5 text-pm-blue" />
+                            Editar Dados de Usuário
+                        </CardTitle>
+                        <CardDescription>
+                            Busque por RE e edite os dados cadastrais de qualquer policial.
+                        </CardDescription>
+                    </CardHeader>
+                    <CardContent className="pt-5">
+                        <UserEditor units={unitNames} />
+                    </CardContent>
+                </Card>
+
                 <AdminManager />
 
                 <div className="grid gap-6 md:grid-cols-2">
