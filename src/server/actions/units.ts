@@ -31,7 +31,7 @@ export async function deleteUnit(id: number) {
         await db.delete(units).where(eq(units.id, id));
         revalidatePath("/dashboard/units");
         return { success: true, message: "Unidade removida." };
-    } catch (error) {
+    } catch {
         return { success: false, message: "Erro ao remover unidade." };
     }
 }

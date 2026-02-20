@@ -1,6 +1,6 @@
 import { db } from "@/db";
-import { transfers, equipamentos, users } from "@/db/schema";
-import { eq, and, desc, ne } from "drizzle-orm";
+import { transfers } from "@/db/schema";
+import { eq, and, desc } from "drizzle-orm";
 
 export async function getPendingTransfers(userId: string, role: string) {
     if (role === 'admin') {

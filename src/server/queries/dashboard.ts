@@ -1,7 +1,7 @@
 
 import { db } from "@/db";
 import { equipamentos, transactions } from "@/db/schema";
-import { count, eq, sql, desc } from "drizzle-orm";
+import { count, eq, desc } from "drizzle-orm";
 
 export async function getDashboardStats() {
     try {

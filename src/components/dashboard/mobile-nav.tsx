@@ -22,7 +22,9 @@ export function MobileNav({ userRole, pendingCount = 0 }: MobileNavProps) {
 
     // Close on navigation
     useEffect(() => {
+        // eslint-disable-next-line react-hooks/set-state-in-effect
         setOpen(false);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [pathname]);
 
     // Prevent body scroll when open

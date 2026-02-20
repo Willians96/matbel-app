@@ -2,7 +2,7 @@
 
 import { db } from "@/db";
 import { equipamentos, transactions } from "@/db/schema";
-import { eq, and } from "drizzle-orm";
+import { eq } from "drizzle-orm";
 import { revalidatePath } from "next/cache";
 
 export type CheckoutState = {

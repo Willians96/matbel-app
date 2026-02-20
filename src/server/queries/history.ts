@@ -1,7 +1,7 @@
 
 import { db } from "@/db";
 import { transfers, equipamentos, users } from "@/db/schema";
-import { desc, eq, and, like } from "drizzle-orm";
+import { desc, eq } from "drizzle-orm";
 
 export type TransferHistoryItem = {
     id: string;
@@ -27,7 +27,7 @@ export async function getTransferHistory(filters?: {
     serialNumber?: string;
 }) {
     try {
-        const conditions = [];
+
 
         if (filters?.userRe) {
             // We need to join users to filter by RE, checking the user_id relation

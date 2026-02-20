@@ -44,7 +44,7 @@ export async function processBulkImport(formData: FormData) {
                         acquisitionDate: new Date(),
                     });
                     count++;
-                } catch (e) {
+                } catch {
                     // Ignora duplicados silenciosamente ou loga
                     console.log(`Skipping duplicate serial: ${serialNumber}`);
                 }

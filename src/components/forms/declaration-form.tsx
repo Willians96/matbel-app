@@ -3,7 +3,7 @@
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import { z } from "zod"
-import { useFormState } from "react-dom";
+
 import { Button } from "@/components/ui"
 import {
     Form,
@@ -72,7 +72,7 @@ export function DeclarationForm({ initialData }: DeclarationFormProps) {
             } else {
                 toast.error("Erro", { description: result.message });
             }
-        } catch (error) {
+        } catch {
             toast.error("Erro de Sistema", { description: "Tente novamente mais tarde." });
         } finally {
             setIsPending(false);

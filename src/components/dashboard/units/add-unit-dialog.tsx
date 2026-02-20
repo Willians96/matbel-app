@@ -32,7 +32,7 @@ export function AddUnitDialog() {
             } else {
                 toast.error(result.message);
             }
-        } catch (error) {
+        } catch {
             toast.error("Erro inesperado ao criar unidade.");
         } finally {
             setLoading(false);

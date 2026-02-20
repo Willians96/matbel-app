@@ -1,13 +1,13 @@
 "use server";
 
 import { db } from "@/db";
-import { declarations, equipamentos, users } from "@/db/schema";
+import { declarations, equipamentos } from "@/db/schema";
 import { auth } from "@clerk/nextjs/server";
-import { eq, and } from "drizzle-orm";
+import { eq } from "drizzle-orm";
 import { revalidatePath } from "next/cache";
 
 export async function approveDeclaration(declarationId: string) {
-    const { userId } = await auth();
+    await auth();
     // In a real app, verify admin role here. For now, assuming middleware handles route protection.
 
     // 1. Get Declaration
@@ -127,7 +127,7 @@ export async function rejectDeclaration(declarationId: string) {
 
         revalidatePath("/dashboard/admin/declarations");
         return { success: true, message: "Declaração rejeitada." };
-    } catch (error) {
+    } catch {
         return { success: false, message: "Erro ao rejeitar." };
     }
 }

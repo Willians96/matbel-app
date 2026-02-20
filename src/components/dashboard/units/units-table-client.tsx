@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { Search, Trash2, ArrowUpDown, MoreHorizontal, ShieldCheck } from "lucide-react";
+import { Search, Trash2, ArrowUpDown, ShieldCheck } from "lucide-react";
 import { toast } from "sonner";
 import { format } from "date-fns";
 import { ptBR } from "date-fns/locale";
@@ -60,7 +60,7 @@ export function UnitsTableClient({ initialUnits }: UnitsTableClientProps) {
             } else {
                 toast.error(result.message);
             }
-        } catch (error) {
+        } catch {
             toast.error("Erro ao remover unidade.");
         } finally {
             setLoadingId(null);

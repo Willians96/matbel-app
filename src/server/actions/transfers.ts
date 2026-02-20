@@ -1,8 +1,8 @@
 "use server";
 
 import { db } from "@/db";
-import { equipamentos, transfers, users } from "@/db/schema";
-import { eq, and, desc } from "drizzle-orm";
+import { equipamentos, transfers } from "@/db/schema";
+import { eq } from "drizzle-orm";
 import { revalidatePath } from "next/cache";
 import { auth } from "@clerk/nextjs/server";
 
@@ -156,7 +156,7 @@ export async function rejectTransfer(transferId: string): Promise<TransferState>
 
         revalidatePath("/dashboard");
         return { success: true, message: "Transferência rejeitada." };
-    } catch (error) {
+    } catch {
         return { success: false, message: "Erro ao rejeitar." };
     }
 }

@@ -58,7 +58,7 @@ export function EquipmentForm({ units }: EquipmentFormProps) {
             } else {
                 toast.error("Erro ao Cadastrar", { description: result.message });
             }
-        } catch (error) {
+        } catch {
             toast.error("Erro de Conexão", { description: "Tente novamente mais tarde." });
         } finally {
             setIsPending(false);
