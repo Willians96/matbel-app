@@ -104,12 +104,6 @@ export function AnalyticsCards({ data }: AnalyticsCardsProps) {
                     </CardContent>
                 </Card>
             </motion.div>
-        </motion.div>                        <p className="text-xs text-red-600/80">
-                            Indisponíveis / Baixados
-                        </p>
-                    </CardContent >
-                </Card >
-            </motion.div >
-        </motion.div >
+        </motion.div>
     );
 }
