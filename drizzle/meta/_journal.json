@@ -43,6 +43,13 @@
       "when": 1771381790908,
       "tag": "0005_smiling_emma_frost",
       "breakpoints": true
+    },
+    {
+      "idx": 6,
+      "version": "6",
+      "when": 1771625362227,
+      "tag": "0006_giant_scarlet_spider",
+      "breakpoints": true
     }
   ]
 }

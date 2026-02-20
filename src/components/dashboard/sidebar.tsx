@@ -12,7 +12,9 @@ import {
     Shield,
     LogOut,
     FileText,
-    History
+    History,
+    Warehouse,
+    ClipboardList
 } from "lucide-react";
 
 export const sidebarItems = [
@@ -37,6 +39,18 @@ export const sidebarItems = [
         href: "/dashboard/units",
         icon: Shield,
         role: "admin", // Future proofing
+    },
+    {
+        title: "Inventário",
+        href: "/dashboard/admin/inventario",
+        icon: Warehouse,
+        role: "admin",
+    },
+    {
+        title: "Criar Carga",
+        href: "/dashboard/admin/carga",
+        icon: ClipboardList,
+        role: "admin",
     },
     {
         title: "Histórico",
