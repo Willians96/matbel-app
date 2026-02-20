@@ -8,28 +8,28 @@ const buttonVariants = cva(
   {
     variants: {
       variant: {
-        variant: {
-          default: "bg-primary text-primary-foreground shadow-md hover:bg-primary/90 hover:shadow-lg hover:-translate-y-0.5 active:translate-y-0 active:scale-95 transition-all duration-200",
-          destructive: "bg-destructive text-destructive-foreground shadow-md hover:bg-destructive/90 hover:shadow-lg hover:-translate-y-0.5 active:translate-y-0 active:scale-95 transition-all duration-200",
-          outline: "border-2 border-input bg-background shadow-sm hover:bg-accent hover:text-accent-foreground hover:border-slate-400 hover:-translate-y-0.5 active:translate-y-0 active:scale-95 transition-all duration-200",
-          secondary: "bg-secondary text-secondary-foreground shadow-sm hover:bg-secondary/80 hover:shadow-md hover:-translate-y-0.5 active:translate-y-0 active:scale-95 transition-all duration-200",
-          ghost: "hover:bg-accent/50 hover:text-accent-foreground active:scale-95 transition-all",
-          link: "text-primary underline-offset-4 hover:underline",
-          primary: "bg-pm-blue text-white shadow-md hover:bg-pm-blue/90 hover:shadow-lg hover:shadow-pm-blue/30 active:shadow-sm focus-visible:ring-4 focus-visible:ring-pm-blue/30 hover:-translate-y-0.5 active:translate-y-0 active:scale-95 transition-all duration-200",
-          glass: "bg-white/10 text-white border border-white/20 shadow-sm hover:bg-white/20 backdrop-blur-sm active:scale-95 transition-all",
-        },
-        size: {
-          default: "h-10 px-4 py-2",
-          sm: "h-9 rounded-md px-3",
-          lg: "h-11 rounded-md px-8",
-          icon: "h-10 w-10",
-        },
+        default: "bg-primary text-primary-foreground shadow-md hover:bg-primary/90 hover:shadow-lg hover:-translate-y-0.5 active:translate-y-0 active:scale-95 transition-all duration-200",
+        destructive: "bg-destructive text-destructive-foreground shadow-md hover:bg-destructive/90 hover:shadow-lg hover:-translate-y-0.5 active:translate-y-0 active:scale-95 transition-all duration-200",
+        outline: "border-2 border-input bg-background shadow-sm hover:bg-accent hover:text-accent-foreground hover:border-slate-400 hover:-translate-y-0.5 active:translate-y-0 active:scale-95 transition-all duration-200",
+        secondary: "bg-secondary text-secondary-foreground shadow-sm hover:bg-secondary/80 hover:shadow-md hover:-translate-y-0.5 active:translate-y-0 active:scale-95 transition-all duration-200",
+        ghost: "hover:bg-accent/50 hover:text-accent-foreground active:scale-95 transition-all",
+        link: "text-primary underline-offset-4 hover:underline",
+        primary: "bg-pm-blue text-white shadow-md hover:bg-pm-blue/90 hover:shadow-lg hover:shadow-pm-blue/30 active:shadow-sm focus-visible:ring-4 focus-visible:ring-pm-blue/30 hover:-translate-y-0.5 active:translate-y-0 active:scale-95 transition-all duration-200",
+        glass: "bg-white/10 text-white border border-white/20 shadow-sm hover:bg-white/20 backdrop-blur-sm active:scale-95 transition-all",
       },
-      defaultVariants: {
-        variant: "default",
-        size: "default",
+      size: {
+        default: "h-10 px-4 py-2",
+        sm: "h-9 rounded-md px-3",
+        lg: "h-11 rounded-md px-8",
+        icon: "h-10 w-10",
       },
-    }
+    },
+    defaultVariants: {
+      variant: "default",
+      size: "default",
+    },
+  }
+);
 );
 
 export interface ButtonProps
