@@ -38,7 +38,7 @@ export default async function DashboardPage() {
                 <div className="flex gap-2">
                     <Link
                         href="/dashboard/checkout"
-                        className="hidden sm:inline-flex items-center justify-center rounded-lg text-sm font-bold text-green-700 ring-offset-background transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border-2 border-green-600/20 bg-white hover:bg-green-50 hover:border-green-600 hover:shadow-md h-10 px-6 py-2 shadow-sm active:scale-95 mr-2"
+                        className="hidden sm:inline-flex items-center justify-center rounded-lg text-sm font-bold text-white ring-offset-background transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-green-600 hover:bg-green-700 shadow-md hover:shadow-lg hover:-translate-y-0.5 active:translate-y-0 active:scale-95 h-10 px-6 py-2 mr-2"
                     >
                         Carga Pessoal Rápida
                     </Link>
