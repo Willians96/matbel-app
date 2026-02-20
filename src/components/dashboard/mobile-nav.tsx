@@ -44,7 +44,7 @@ export function MobileNav({ userRole, pendingCount = 0 }: MobileNavProps) {
 
     return (
         <div className="md:hidden">
-            <Button variant="ghost" size="icon" onClick={() => setOpen(true)} aria-label="Abrir Menu">
+            <Button variant="ghost" size="icon" onClick={() => setOpen(true)} aria-label="Abrir Menu" className="text-white hover:bg-white/10 hover:text-white">
                 <Menu className="w-6 h-6" />
             </Button>
 
