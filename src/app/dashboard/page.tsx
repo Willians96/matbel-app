@@ -63,7 +63,7 @@ export default async function DashboardPage() {
                     <AnalyticsCharts statusData={statusData} categoryData={categoryData} />
                 </div>
                 <div className="col-span-7 lg:col-span-3">
-                    <RecentActivity activities={stats.recentActivity} />
+                    <RecentActivity />
                 </div>
             </div>
         </div>
