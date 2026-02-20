@@ -44,14 +44,14 @@ export default async function ProfilePage() {
                         <CardHeader>
                             <div className="flex items-center gap-2">
                                 <Package className="w-5 h-5 text-pm-blue" />
-                                <CardTitle>Minhas Cautelas</CardTitle>
+                                <CardTitle>Minha Carga Ativa</CardTitle>
                             </div>
                             <CardDescription>Materiais sob sua responsabilidade.</CardDescription>
                         </CardHeader>
                         <CardContent>
                             {transactions.length === 0 ? (
                                 <div className="text-center py-8 text-muted-foreground">
-                                    <p>Nenhum material cautelado.</p>
+                                    <p>Nenhum material em carga ativa.</p>
                                 </div>
                             ) : (
                                 <ul className="space-y-4">

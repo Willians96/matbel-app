@@ -25,6 +25,6 @@ export async function getUserActiveTransactions(userRe: string) {
         return { success: true, data: result };
     } catch (error) {
         console.error("Error fetching user transactions:", error);
-        return { success: false, message: "Erro ao buscar cautelas." };
+        return { success: false, message: "Erro ao buscar materiais em carga." };
     }
 }

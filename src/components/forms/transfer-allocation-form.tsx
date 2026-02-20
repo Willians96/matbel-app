@@ -26,7 +26,7 @@ function SubmitButton() {
     const { pending } = useFormStatus();
     return (
         <Button type="submit" className="w-full bg-pm-blue text-white hover:bg-pm-blue/90" disabled={pending}>
-            {pending ? "Processando..." : "Enviar Solicitação de Entrega"}
+            {pending ? "Processando..." : "Confirmar Entrega ao Policial"}
         </Button>
     );
 }
@@ -69,7 +69,7 @@ export function TransferAllocationForm({ users, equipments }: AllocationFormProp
 
             <Card>
                 <CardHeader>
-                    <CardTitle>Nova Cautela</CardTitle>
+                    <CardTitle>Nova Entrega de Material</CardTitle>
                     <CardDescription>
                         Selecione o policial e o equipamento. Será gerada uma solicitação pendente de confirmação.
                     </CardDescription>

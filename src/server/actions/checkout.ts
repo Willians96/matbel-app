@@ -56,10 +56,10 @@ export async function processCheckout(prevState: CheckoutState, formData: FormDa
             .where(eq(equipamentos.id, equipment.id));
 
         revalidatePath("/dashboard/equipment");
-        return { success: true, message: "Cautela realizada com sucesso! Equipamento liberado." };
+        return { success: true, message: "Retirada realizada com sucesso! Equipamento liberado." };
 
     } catch (error) {
         console.error("Checkout Error:", error);
-        return { success: false, message: "Erro interno ao processar cautela." };
+        return { success: false, message: "Erro interno ao processar retirada." };
     }
 }

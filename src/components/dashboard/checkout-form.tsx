@@ -29,8 +29,8 @@ function SubmitButton() {
     const { pending } = useFormStatus();
 
     return (
-        <Button type="submit" className="w-full bg-pm-blue hover:bg-pm-blue/90" disabled={pending}>
-            {pending ? "Processando..." : "Confirmar Retirada (Cautela)"}
+        <Button type="submit" className="w-full bg-pm-blue text-white hover:bg-pm-blue/90" disabled={pending}>
+            {pending ? "Processando..." : "Confirmar Retirada"}
         </Button>
     );
 }

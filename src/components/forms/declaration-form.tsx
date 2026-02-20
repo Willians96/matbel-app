@@ -86,7 +86,7 @@ export function DeclarationForm({ initialData }: DeclarationFormProps) {
                     <div>
                         <CardTitle>Declaração de Material Permanente</CardTitle>
                         <CardDescription>
-                            Informe os equipamentos que estão sob sua cautela permanente.
+                            Informe os equipamentos que estão sob sua carga permanente.
                         </CardDescription>
                     </div>
                     {/* Status Badges */}
@@ -172,7 +172,7 @@ export function DeclarationForm({ initialData }: DeclarationFormProps) {
                                                     Possuo Algema
                                                 </FormLabel>
                                                 <FormDescription>
-                                                    Marque se você possui algema cautelada.
+                                                    Marque se você possui algema em carga permanente.
                                                 </FormDescription>
                                             </div>
                                         </FormItem>

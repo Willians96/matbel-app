@@ -80,7 +80,7 @@ export default async function SettingsPage() {
                                 Preferências de Unidades
                             </CardTitle>
                             <CardDescription>
-                                Configurações padrão para novas cautelas.
+                                Configurações padrão para novas alocações de material.
                             </CardDescription>
                         </CardHeader>
                         <CardContent>

@@ -64,7 +64,7 @@ export function ProfileForm({ initialData, units }: ProfileFormProps) {
         <Card>
             <CardHeader>
                 <CardTitle>Dados Profissionais</CardTitle>
-                <CardDescription>Estes dados serão usados nas cautelas.</CardDescription>
+                <CardDescription>Estes dados serão usados nos termos de carga.</CardDescription>
             </CardHeader>
             <CardContent>
                 <form action={formAction} className="space-y-6">
