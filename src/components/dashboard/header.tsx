@@ -9,7 +9,7 @@ interface DashboardHeaderProps {
 
 export function DashboardHeader({ userRole, pendingCount }: DashboardHeaderProps) {
     return (
-        <div role="region" aria-label="Dashboard header" className="h-16 border-b border-white/10 bg-pm-blue/95 backdrop-blur-md supports-[backdrop-filter]:bg-pm-blue/80 flex items-center justify-between px-6 sticky top-0 z-10 w-full shadow-lg transition-all duration-200">
+        <div role="region" aria-label="Dashboard header" className="h-16 border-b border-white/10 bg-pm-blue flex items-center justify-between px-6 sticky top-0 z-10 w-full shadow-lg transition-all duration-200">
             <div className="flex items-center gap-4">
                 <MobileNav userRole={userRole} pendingCount={pendingCount} />
                 <div className="text-sm font-medium hidden md:block text-slate-100">

@@ -10,7 +10,7 @@ export function Header() {
   const [open, setOpen] = useState(false);
 
   return (
-    <header className="flex h-16 w-full items-center justify-between border-b border-white/10 px-4 md:px-6 bg-pm-blue/95 backdrop-blur-md supports-[backdrop-filter]:bg-pm-blue/80 text-white shadow-lg sticky top-0 z-50 transition-all duration-200">
+    <header className="flex h-16 w-full items-center justify-between border-b border-white/10 px-4 md:px-6 bg-pm-blue text-white shadow-lg sticky top-0 z-50 transition-all duration-200">
       <Link className="flex items-center gap-2 font-bold hover:text-blue-100 transition-colors" href="/">
         <span>Matbel CPI-7</span>
       </Link>

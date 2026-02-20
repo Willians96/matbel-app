@@ -38,13 +38,13 @@ export default async function DashboardPage() {
                 <div className="flex gap-2">
                     <Link
                         href="/dashboard/checkout"
-                        className="hidden sm:inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input bg-background hover:bg-accent hover:text-accent-foreground h-10 px-4 py-2"
+                        className="hidden sm:inline-flex items-center justify-center rounded-lg text-sm font-bold text-pm-blue ring-offset-background transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border-2 border-pm-blue/20 bg-white hover:bg-blue-50 hover:border-pm-blue hover:shadow-md h-10 px-6 py-2 shadow-sm active:scale-95 mr-2"
                     >
                         Carga Pessoal Rápida
                     </Link>
                     <Link
                         href="/dashboard/equipment/new"
-                        className="inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-pm-blue text-white hover:bg-pm-blue/90 h-10 px-4 py-2"
+                        className="inline-flex items-center justify-center rounded-lg text-sm font-bold text-white transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-pm-blue/50 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-gradient-to-r from-pm-blue to-blue-900 shadow-md hover:shadow-xl hover:shadow-pm-blue/30 hover:-translate-y-0.5 active:translate-y-0 active:scale-95 h-10 px-6 py-2"
                     >
                         + Novo Equipamento
                     </Link>
