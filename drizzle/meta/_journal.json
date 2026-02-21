@@ -50,6 +50,13 @@
       "when": 1771625362227,
       "tag": "0006_giant_scarlet_spider",
       "breakpoints": true
+    },
+    {
+      "idx": 7,
+      "version": "6",
+      "when": 1771633906245,
+      "tag": "0007_bizarre_harry_osborn",
+      "breakpoints": true
     }
   ]
 }

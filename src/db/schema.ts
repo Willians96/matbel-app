@@ -206,3 +206,42 @@ export const cargas = sqliteTable('cargas', {
     createdAt: integer('created_at', { mode: 'timestamp' }).default(sql`CURRENT_TIMESTAMP`),
     updatedAt: integer('updated_at', { mode: 'timestamp' }).default(sql`CURRENT_TIMESTAMP`),
 });
+
+// ─── Treinamento ─────────────────────────────────────────────────────────────
+// Sessões de instrução onde um instrutor recebe múltiplos itens.
+export const treinamentos = sqliteTable('treinamentos', {
+    id: text('id').primaryKey().$defaultFn(() => crypto.randomUUID()),
+    adminId: text('admin_id').references(() => users.id).notNull(),
+    userId: text('user_id').references(() => users.id).notNull(), // O instrutor
+
+    // Munição específica de treino (opcional)
+    municaoId: integer('municao_id').references(() => municoes.id),
+    municaoQty: integer('municao_qty').default(0).notNull(),
+
+    // Devolução: controle de cápsulas vazias
+    capsulesQty: integer('capsules_qty').default(0).notNull(),
+
+    status: text('status', {
+        enum: ['pending_acceptance', 'confirmed', 'returned']
+    }).default('pending_acceptance').notNull(),
+
+    confirmedAt: integer('confirmed_at', { mode: 'timestamp' }),
+    returnedAt: integer('returned_at', { mode: 'timestamp' }),
+    signature: text('signature'),
+
+    createdAt: integer('created_at', { mode: 'timestamp' }).default(sql`CURRENT_TIMESTAMP`),
+    updatedAt: integer('updated_at', { mode: 'timestamp' }).default(sql`CURRENT_TIMESTAMP`),
+});
+
+// Itens individuais vinculados ao treinamento (permite múltiplas armas por instrutor)
+export const treinamentoItens = sqliteTable('treinamento_itens', {
+    id: integer('id').primaryKey({ autoIncrement: true }),
+    treinamentoId: text('treinamento_id').references(() => treinamentos.id).notNull(),
+
+    // Um destes será preenchido por linha
+    armaId: integer('arma_id').references(() => armas.id),
+    coleteId: integer('colete_id').references(() => coletes.id),
+    algemaId: integer('algema_id').references(() => algemas.id),
+
+    createdAt: integer('created_at', { mode: 'timestamp' }).default(sql`CURRENT_TIMESTAMP`),
+});

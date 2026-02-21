@@ -1,9 +1,11 @@
 
 import { getCurrentUserProfile } from "@/server/queries/user";
 import { getCargaPendenteOuAtiva } from "@/server/queries/carga";
+import { getTreinamentoAtivo, getTreinamentoWithDetails } from "@/server/actions/treinamento";
 import { getUserActiveTransactions } from "@/server/queries/transactions";
 import { ProfileForm } from "@/components/dashboard/profile-form";
 import { CargaPendenteCard } from "@/components/dashboard/carga-pendente-card";
+import { TreinamentoPendenteCard } from "@/components/dashboard/treinamento/treinamento-pendente-card";
 import { UserCog, Package, LogOut } from "lucide-react";
 import { SignOutButton } from "@clerk/nextjs";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
@@ -18,6 +20,10 @@ export default async function ProfilePage() {
     const transactions = transactionsResult.success && transactionsResult.data ? transactionsResult.data : [];
     const units = await getAllUnits();
     const carga = user?.id ? await getCargaPendenteOuAtiva(user.id) : null;
+
+    // Treinamento
+    const treinamentoBasic = user?.id ? await getTreinamentoAtivo(user.id) : null;
+    const treinamento = treinamentoBasic ? await getTreinamentoWithDetails(treinamentoBasic.id) : null;
 
     return (
         <div className="max-w-4xl mx-auto space-y-8">
@@ -37,6 +43,11 @@ export default async function ProfilePage() {
             {/* Carga Pendente Banner */}
             {carga && (
                 <CargaPendenteCard carga={carga} />
+            )}
+
+            {/* Treinamento Pendente/Ativo */}
+            {treinamento && (
+                <TreinamentoPendenteCard treinamento={treinamento} />
             )}
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
