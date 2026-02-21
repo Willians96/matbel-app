@@ -1,41 +1,44 @@
-import { checkAdmin } from "@/server/auth";
-import { getRecentTreinamentos } from "@/server/queries/treinamento";
+import { getMunicoesBatches } from "@/server/queries/inventario";
+import { getAllTreinamentos } from "@/server/actions/treinamento";
+import { WizardTreinamento } from "@/components/dashboard/treinamento/wizard-treinamento";
 import { TreinamentoList } from "@/components/dashboard/treinamento/treinamento-list";
-import { Button } from "@/components/ui/button";
-import { Target, Plus } from "lucide-react";
-import Link from "next/link";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { GraduationCap, Plus, List } from "lucide-react";
 
 export default async function TreinamentoPage() {
-    await checkAdmin();
-    const treinamentos = await getRecentTreinamentos();
+    const [municoes, treinamentos] = await Promise.all([
+        getMunicoesBatches(),
+        getAllTreinamentos(),
+    ]);
 
     return (
-        <div className="space-y-6 animate-in fade-in slide-in-from-bottom-4 duration-500">
-            {/* Header */}
-            <div className="flex flex-row items-center justify-between">
-                <div className="flex items-center gap-3">
-                    <div className="p-3 bg-pm-blue text-white rounded-full shadow-lg shadow-blue-900/20">
-                        <Target className="w-6 h-6" />
-                    </div>
-                    <div>
-                        <h2 className="text-2xl md:text-3xl font-bold tracking-tight text-pm-blue">
-                            Módulo de Treinamento
-                        </h2>
-                        <p className="text-muted-foreground text-sm font-medium">
-                            Gestão de material bélico para sessões de instrução e tiro.
-                        </p>
-                    </div>
+        <div className="space-y-6">
+            <div className="flex items-center gap-3">
+                <div className="w-10 h-10 rounded-xl bg-orange-100 flex items-center justify-center">
+                    <GraduationCap className="w-5 h-5 text-orange-600" />
                 </div>
-
-                <Link href="/dashboard/admin/treinamento/novo">
-                    <Button className="bg-pm-blue hover:bg-blue-800 text-white font-bold gap-2 shadow-md">
-                        <Plus className="w-5 h-5" />
-                        Novo Treinamento
-                    </Button>
-                </Link>
+                <div>
+                    <h1 className="text-2xl font-bold text-slate-800">Treinamento</h1>
+                    <p className="text-sm text-slate-500">Criar e gerenciar cargas temporárias para instrução.</p>
+                </div>
             </div>
 
-            <TreinamentoList initialData={treinamentos} />
+            <Tabs defaultValue="lista" className="w-full">
+                <TabsList className="mb-4">
+                    <TabsTrigger value="lista" className="flex items-center gap-2">
+                        <List className="w-4 h-4" /> Treinamentos
+                    </TabsTrigger>
+                    <TabsTrigger value="novo" className="flex items-center gap-2">
+                        <Plus className="w-4 h-4" /> Novo Treinamento
+                    </TabsTrigger>
+                </TabsList>
+                <TabsContent value="lista">
+                    <TreinamentoList treinamentos={treinamentos} />
+                </TabsContent>
+                <TabsContent value="novo">
+                    <WizardTreinamento municoes={municoes} />
+                </TabsContent>
+            </Tabs>
         </div>
     );
 }

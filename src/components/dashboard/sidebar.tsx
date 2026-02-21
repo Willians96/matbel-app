@@ -14,7 +14,7 @@ import {
     History,
     Warehouse,
     ClipboardList,
-    Target
+    GraduationCap
 } from "lucide-react";
 
 export const sidebarItems = [
@@ -22,12 +22,6 @@ export const sidebarItems = [
         title: "Dashboard",
         href: "/dashboard",
         icon: LayoutDashboard,
-    },
-    {
-        title: "Treinamento",
-        href: "/dashboard/admin/treinamento",
-        icon: Target,
-        role: "admin",
     },
     {
         title: "Equipamentos",
@@ -50,6 +44,12 @@ export const sidebarItems = [
         title: "Criar Carga",
         href: "/dashboard/admin/carga",
         icon: ClipboardList,
+        role: "admin",
+    },
+    {
+        title: "Treinamento",
+        href: "/dashboard/admin/treinamento",
+        icon: GraduationCap,
         role: "admin",
     },
     {

@@ -1,11 +1,11 @@
 
 import { getCurrentUserProfile } from "@/server/queries/user";
 import { getCargaPendenteOuAtiva } from "@/server/queries/carga";
-import { getTreinamentoAtivo, getTreinamentoWithDetails } from "@/server/actions/treinamento";
 import { getUserActiveTransactions } from "@/server/queries/transactions";
 import { ProfileForm } from "@/components/dashboard/profile-form";
 import { CargaPendenteCard } from "@/components/dashboard/carga-pendente-card";
-import { TreinamentoPendenteCard } from "@/components/dashboard/treinamento/treinamento-pendente-card";
+import { InstructorTrainingCard } from "@/components/dashboard/treinamento/instructor-training-card";
+import { getActiveTreinamentoByInstrutor } from "@/server/actions/treinamento";
 import { UserCog, Package, LogOut } from "lucide-react";
 import { SignOutButton } from "@clerk/nextjs";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
@@ -20,10 +20,7 @@ export default async function ProfilePage() {
     const transactions = transactionsResult.success && transactionsResult.data ? transactionsResult.data : [];
     const units = await getAllUnits();
     const carga = user?.id ? await getCargaPendenteOuAtiva(user.id) : null;
-
-    // Treinamento
-    const treinamentoBasic = user?.id ? await getTreinamentoAtivo(user.id) : null;
-    const treinamento = treinamentoBasic ? await getTreinamentoWithDetails(treinamentoBasic.id) : null;
+    const treinamento = user?.id ? await getActiveTreinamentoByInstrutor(user.id) : null;
 
     return (
         <div className="max-w-4xl mx-auto space-y-8">
@@ -45,9 +42,9 @@ export default async function ProfilePage() {
                 <CargaPendenteCard carga={carga} />
             )}
 
-            {/* Treinamento Pendente/Ativo */}
+            {/* Treinamento Banner */}
             {treinamento && (
-                <TreinamentoPendenteCard treinamento={treinamento} />
+                <InstructorTrainingCard treinamento={treinamento} />
             )}
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
