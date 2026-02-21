@@ -14,7 +14,7 @@ import {
     History,
     Warehouse,
     ClipboardList,
-    GraduationCap
+    Target
 } from "lucide-react";
 
 export const sidebarItems = [
@@ -24,9 +24,10 @@ export const sidebarItems = [
         icon: LayoutDashboard,
     },
     {
-        title: "Instrução / Treino",
+        title: "Treinamento",
         href: "/dashboard/admin/treinamento",
-        icon: GraduationCap,
+        icon: Target,
+        role: "admin",
     },
     {
         title: "Equipamentos",
@@ -75,10 +76,7 @@ export function Sidebar({ userRole, pendingCount = 0 }: { userRole: string | nul
     return (
         <div className="hidden md:flex bg-pm-blue text-white h-screen flex-col w-64 fixed left-0 top-0" role="complementary" aria-label="Sidebar">
             <div className="p-6 border-b border-white/10">
-                <div className="flex items-center gap-2">
-                    <h1 className="text-2xl font-bold tracking-tight text-white">CPI-7</h1>
-                    <span className="bg-yellow-400 text-black text-[10px] px-1 rounded font-bold">MODULO OK</span>
-                </div>
+                <h1 className="text-2xl font-bold tracking-tight text-white">CPI-7</h1>
                 <p className="text-sm font-medium text-slate-100 mt-1">Controle de Material Bélico</p>
             </div>
 
